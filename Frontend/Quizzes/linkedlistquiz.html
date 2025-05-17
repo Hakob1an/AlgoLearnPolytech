@@ -1,0 +1,914 @@
+<!DOCTYPE html>
+<html lang="hy">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Կապակցված Ցուցակի Թեստ | AlgoLearn</title>
+  <style>
+    :root {
+      --primary: #6f42c1;
+      --primary-dark: #5f38a9;
+      --success: #22c55e;
+      --error: #ef4444;
+      --bg: #f9fafb;
+      --card-bg: #ffffff;
+      --text: #1f2937;
+      --text-light: #6b7280;
+      --border: #e5e7eb;
+      --shadow: rgba(0, 0, 0, 0.1);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Roboto, system-ui, -apple-system, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      padding: 30px 20px;
+    }
+
+    .quiz-container {
+      max-width: 800px;
+      margin: 0 auto;
+      background: var(--card-bg);
+      padding: 35px;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px var(--shadow);
+    }
+
+    .quiz-header {
+      text-align: center;
+      margin-bottom: 40px;
+      padding-bottom: 20px;
+      border-bottom: 2px solid var(--border);
+    }
+
+    .quiz-header h1 {
+      font-size: 2.2rem;
+      color: var(--primary);
+      margin-bottom: 12px;
+    }
+
+    .quiz-header p {
+      color: var(--text-light);
+      font-size: 1.1rem;
+    }
+
+    .question-block {
+      margin-bottom: 35px;
+      padding: 25px;
+      border-radius: 8px;
+      background-color: rgba(245, 247, 250, 0.7);
+      border-left: 4px solid var(--primary);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .question-block:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    }
+
+    .question-block h2 {
+      font-size: 1.2rem;
+      margin-bottom: 18px;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+    }
+
+    .question-block h2::before {
+      content: attr(data-number);
+      background-color: var(--primary);
+      color: white;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-right: 12px;
+      font-size: 0.9rem;
+      flex-shrink: 0;
+    }
+
+    .options-list {
+      list-style: none;
+      padding-left: 40px;
+    }
+
+    .options-list li {
+      margin: 12px 0;
+    }
+
+    .option-label {
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+      padding: 10px 15px;
+      border-radius: 6px;
+      transition: background-color 0.2s;
+    }
+
+    .option-label:hover {
+      background-color: rgba(99, 102, 241, 0.1);
+    }
+
+    input[type="radio"] {
+      margin-right: 12px;
+      width: 18px;
+      height: 18px;
+      accent-color: var(--primary);
+    }
+
+    .code-snippet {
+      background: #f8fafc;
+      padding: 16px;
+      border-radius: 8px;
+      border: 1px solid #e2e8f0;
+      font-family: 'Cascadia Code', 'Fira Code', Consolas, monospace;
+      font-size: 0.95rem;
+      white-space: pre-wrap;
+      margin: 15px 0;
+      line-height: 1.5;
+    }
+
+    .input-field {
+      width: 100%;
+      padding: 12px 15px;
+      font-size: 1rem;
+      margin-top: 10px;
+      border: 2px solid var(--border);
+      border-radius: 6px;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .input-field:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.25);
+      outline: none;
+    }
+
+    .check-btn {
+      display: block;
+      width: 100%;
+      max-width: 300px;
+      margin: 40px auto 20px;
+      padding: 14px 25px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      background-color: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.2s, transform 0.1s;
+      box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+    }
+
+    .check-btn:hover {
+      background-color: var(--primary-dark);
+    }
+
+    .check-btn:active {
+      transform: translateY(2px);
+    }
+
+    .result-message {
+      margin-top: 12px;
+      padding: 10px 15px;
+      border-radius: 6px;
+      font-weight: 500;
+      opacity: 0;
+      height: 0;
+      transition: opacity 0.3s, height 0.3s;
+      overflow: hidden;
+    }
+
+    .result-visible {
+      opacity: 1;
+      height: auto;
+      padding: 10px 15px;
+    }
+
+    .correct-answer {
+      background-color: rgba(34, 197, 94, 0.15);
+      color: #166534;
+      border-left: 4px solid var(--success);
+    }
+
+    .wrong-answer {
+      background-color: rgba(239, 68, 68, 0.15);
+      color: #991b1b;
+      border-left: 4px solid var(--error);
+    }
+
+    /* Progress bar */
+    .progress-container {
+      margin-bottom: 30px;
+      padding: 0 15px;
+    }
+
+    .progress-bar {
+      height: 8px;
+      background-color: #e5e7eb;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background-color: var(--primary);
+      width: 0%;
+      transition: width 0.5s;
+    }
+
+    .progress-text {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.9rem;
+      margin-top: 6px;
+      color: var(--text-light);
+    }
+
+    /* Animation for correct/wrong answers */
+    @keyframes pulse {
+      0% {
+        transform: scale(1);
+      }
+
+      50% {
+        transform: scale(1.05);
+      }
+
+      100% {
+        transform: scale(1);
+      }
+    }
+
+    .pulse {
+      animation: pulse 0.5s;
+    }
+
+    /* Responsive design */
+    @media (max-width: 768px) {
+      .quiz-container {
+        padding: 25px 20px;
+      }
+
+      .question-block {
+        padding: 20px 15px;
+      }
+
+      .options-list {
+        padding-left: 15px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="quiz-container">
+    <div class="quiz-header">
+      <h1>Կապակցված Ցուցակի Թեստ</h1>
+      <p>Ստուգեք ձեր գիտելիքները կապակցված ցուցակի վերաբերյալ</p>
+    </div>
+
+    <div class="progress-container">
+      <div class="progress-bar">
+        <div class="progress-fill" id="progress-fill"></div>
+      </div>
+      <div class="progress-text">
+        <span>0/10 հարց պատասխանված</span>
+        <span id="progress-percent">0%</span>
+      </div>
+    </div>
+
+    <!-- Q1 -->
+    <div class="question-block" id="q1">
+      <h2 data-number="1">Որն է կապակցված ցուցակի հիմնական առավելությունը զանգվածի նկատմամբ?</h2>
+      <ul class="options-list">
+        <li>
+          <label class="option-label">
+            <input type="radio" name="q1" value="1"> Ավելի արագ որոնում
+          </label>
+        </li>
+        <li>
+          <label class="option-label">
+            <input type="radio" name="q1" value="2"> Պատահական մուտք
+          </label>
+        </li>
+        <li>
+          <label class="option-label">
+            <input type="radio" name="q1" value="3"> Դինամիկ չափ
+          </label>
+        </li>
+        <li>
+          <label class="option-label">
+            <input type="radio" name="q1" value="4"> Քեշի լոկալություն
+          </label>
+        </li>
+      </ul>
+      <p class="result-message" id="result-q1"></p>
+    </div>
+
+    <!-- Q2 -->
+    <div class="question-block" id="q2">
+      <h2 data-number="2">Որն է ժամանակային բարդությունը կապակցված ցուցակի սկզբում հանգույց ավելացնելու համար?</h2>
+      <ul class="options-list">
+        <li>
+          <label class="option-label">
+            <input type="radio" name="q2" value="1"> O(1)
+          </label>
+        </li>
+        <li>
+          <label class="option-label">
+            <input type="radio" name="q2" value="2"> O(n)
+          </label>
+        </li>
+        <li>
+          <label class="option-label">
+            <input type="radio" name="q2" value="3"> O(log n)
+          </label>
+        </li>
+        <li>
+          <label class="option-label">
+            <input type="radio" name="q2" value="4"> O(n²)
+          </label>
+        </li>
+      </ul>
+      <p class="result-message" id="result-q2"></p>
+    </div>
+
+    <!-- Q3 -->
+    <div class="question-block" id="q3">
+      <h2 data-number="3">Որն է ժամանակային բարդությունը կապակցված ցուցակում հանգույց որոնելու համար?</h2>
+      <ul class="options-list">
+        <li>
+          <label class="option-label">
+            <input type="radio" name="q3" value="1"> O(1)
+          </label>
+        </li>
+        <li>
+          <label class="option-label">
+            <input type="radio" name="q3" value="2"> O(log n)
+          </label>
+        </li>
+        <li>
+          <label class="option-label">
+            <input type="radio" name="q3" value="3"> O(n)
+          </label>
+        </li>
+        <li>
+          <label class="option-label">
+            <input type="radio" name="q3" value="4"> O(n²)
+          </label>
+        </li>
+      </ul>
+      <p class="result-message" id="result-q3"></p>
+    </div>
+
+    <!-- Q4 -->
+    <div class="question-block" id="q4">
+      <h2 data-number="4">Որն է կապակցված ցուցակի հիմնական թերությունը զանգվածի նկատմամբ?</h2>
+      <ul class="options-list">
+        <li>
+          <label class="option-label">
+            <input type="radio" name="q4" value="1"> Ֆիքսված չափ
+          </label>
+        </li>
+        <li>
+          <label class="option-label">
+            <input type="radio" name="q4" value="2"> Դանդաղ ներդրում սկզբում
+          </label>
+        </li>
+        <li>
+          <label class="option-label">
+            <input type="radio" name="q4" value="3"> Պատահական մուտքի բացակայություն
+          </label>
+        </li>
+        <li>
+          <label class="option-label">
+            <input type="radio" name="q4" value="4"> Պահանջում է հարակից հիշողություն
+          </label>
+        </li>
+      </ul>
+      <p class="result-message" id="result-q4"></p>
+    </div>
+
+    <!-- Q5 -->
+    <div class="question-block" id="q5">
+      <h2 data-number="5">Լրացրու բացակայող մասը կապակցված ցուցակի ներդրման պսևդոկոդում։</h2>
+      <div class="code-snippet">Procedure InsertAtBeginning(head, data):
+  newNode ← NewNode(data)
+  newNode.next ← head
+  _______</div>
+      <input type="text" id="q5-answer" placeholder="Քո պատասխանը..." class="input-field">
+      <p class="result-message" id="result-q5"></p>
+    </div>
+
+    <!-- Q6 -->
+    <div class="question-block" id="q6">
+      <h2 data-number="6">Կապակցված ցուցակի տարրերը պահվում են հարակից հիշողության մեջ։</h2>
+      <ul class="options-list">
+        <li>
+          <label class="option-label">
+            <input type="radio" name="q6" value="1"> Ճիշտ
+          </label>
+        </li>
+        <li>
+          <label class="option-label">
+            <input type="radio" name="q6" value="2"> Սխալ
+          </label>
+        </li>
+      </ul>
+      <p class="result-message" id="result-q6"></p>
+    </div>
+
+    <!-- Q7 -->
+    <div class="question-block" id="q7">
+      <h2 data-number="7">Որն է լավագույն դեպքի բարդությունը կապակցված ցուցակի գլխավոր հանգույցը ջնջելու համար?</h2>
+      <ul class="options-list">
+        <li>
+          <label class="option-label">
+            <input type="radio" name="q7" value="1"> O(1)
+          </label>
+        </li>
+        <li>
+          <label class="option-label">
+            <input type="radio" name="q7" value="2"> O(n)
+          </label>
+        </li>
+        <li>
+          <label class="option-label">
+            <input type="radio" name="q7" value="3"> O(n log n)
+          </label>
+        </li>
+        <li>
+          <label class="option-label">
+            <input type="radio" name="q7" value="4"> O(n²)
+          </label>
+        </li>
+      </ul>
+      <p class="result-message" id="result-q7"></p>
+    </div>
+
+    <!-- Q8 -->
+    <div class="question-block" id="q8">
+      <h2 data-number="8">Լրացրու բացակայող մասը կապակցված ցուցակից հանգույց ջնջելու պսևդոկոդում։</h2>
+      <div class="code-snippet">Procedure DeleteNode(head, key):
+  temp ← head
+  prev ← null
+
+  If temp ≠ null AND temp.value = key:
+    head ← temp.next
+    return
+
+  While temp ≠ null AND temp.value ≠ key:
+    prev ← temp
+    temp ← temp.next
+
+  If temp = null:
+    return
+
+  _______</div>
+      <input type="text" id="q8-answer" placeholder="Քո պատասխանը..." class="input-field">
+      <p class="result-message" id="result-q8"></p>
+    </div>
+
+    <!-- Q9 -->
+    <div class="question-block" id="q9">
+      <h2 data-number="9">Ո՞ր տեսակի կապակցված ցուցակն է թույլ տալիս անցում երկու ուղղություններով:</h2>
+      <ul class="options-list">
+        <li>
+          <label class="option-label">
+            <input type="radio" name="q9" value="1"> Միակողմանի կապակցված ցուցակ
+          </label>
+        </li>
+        <li>
+          <label class="option-label">
+            <input type="radio" name="q9" value="2"> Երկկողմանի կապակցված ցուցակ
+          </label>
+        </li>
+        <li>
+          <label class="option-label">
+            <input type="radio" name="q9" value="3"> Շրջանային կապակցված ցուցակ
+          </label>
+        </li>
+        <li>
+          <label class="option-label">
+            <input type="radio" name="q9" value="4"> Թռիչքային ցուցակ
+          </label>
+        </li>
+      </ul>
+      <p class="result-message" id="result-q9"></p>
+    </div>
+
+    <!-- Q10 -->
+    <div class="question-block" id="q10">
+      <h2 data-number="10">Ինչու է կապակցված ցուցակի անցումն ավելի դանդաղ, քան զանգվածի անցումը?</h2>
+      <ul class="options-list">
+        <li>
+          <label class="option-label">
+            <input type="radio" name="q10" value="1"> Պահանջում է ավելի շատ հիշողություն
+          </label>
+        </li>
+        <li>
+          <label class="option-label">
+            <input type="radio" name="q10" value="2"> Քեշի լոկալության խնդիրներ
+          </label>
+        </li>
+        <li>
+          <label class="option-label">
+            <input type="radio" name="q10" value="3"> Ավելի շատ համեմատություններ են ներառված
+          </label>
+        </li>
+        <li>
+          <label class="option-label">
+            <input type="radio" name="q10" value="4"> Ցուցիչների աջակցության բացակայություն
+          </label>
+        </li>
+      </ul>
+      <p class="result-message" id="result-q10"></p>
+    </div>
+
+    <button class="check-btn" onclick="checkAnswers()">Ստուգել պատասխանները</button>
+  </div>
+
+  <script>
+    // map your static q1..q10 blocks → real DB IDs
+    const questionIdMap = {};
+
+    const topic = "LinkedList";
+    const API_GET_IDS = `https://localhost:7045/api/quiz/${topic}`;
+    const API_SUBMIT = "https://localhost:7045/api/quiz/submit";
+    const API_COMPLETE = "https://localhost:7045/api/dashboard/complete";
+
+    // Track answered questions for progress bar
+    let answeredQuestions = 0;
+    const totalQuestions = 10;
+
+    // Update progress bar
+    function updateProgress() {
+      const percent = (answeredQuestions / totalQuestions) * 100;
+      document.getElementById('progress-fill').style.width = `${percent}%`;
+      document.getElementById('progress-percent').textContent = `${Math.round(percent)}%`;
+      document.querySelector('.progress-text span:first-child').textContent =
+        `${answeredQuestions}/${totalQuestions} հարց պատասխանված`;
+    }
+
+    // Track answers for each question
+    function trackAnswers() {
+      // For radio questions
+      const radioInputs = document.querySelectorAll('input[type="radio"]');
+      radioInputs.forEach(input => {
+        input.addEventListener('change', function () {
+          const questionBlock = this.closest('.question-block');
+          if (!questionBlock.classList.contains('answered')) {
+            questionBlock.classList.add('answered');
+            answeredQuestions++;
+            updateProgress();
+          }
+        });
+      });
+
+      // For text input questions
+      const textInputs = document.querySelectorAll('input[type="text"]');
+      textInputs.forEach(input => {
+        input.addEventListener('blur', function () {
+          if (this.value.trim() !== '') {
+            const questionBlock = this.closest('.question-block');
+            if (!questionBlock.classList.contains('answered')) {
+              questionBlock.classList.add('answered');
+              answeredQuestions++;
+              updateProgress();
+            }
+          }
+        });
+      });
+    }
+
+    // 1) On load, fetch the quiz questions and build questionIdMap
+    const loadIds = (async () => {
+      try {
+        const res = await fetch(API_GET_IDS);
+        if (!res.ok) throw new Error("Failed to load quiz questions");
+        const questions = await res.json();
+        questions.forEach((q, idx) => {
+          // static block # matches index+1
+          questionIdMap["q" + (idx + 1)] = q.id;
+        });
+      } catch (e) {
+        console.error(e);
+        alert("Սխալ՝ թեստը բեռնելիս։");
+      }
+    })();
+
+    // 2) Correct answer checks
+    const correct = {
+      q1: "3", // Դինամիկ չափ
+      q2: "1", // O(1)
+      q3: "3", // O(n)
+      q4: "3", // Պատահական մուտքի բացակայություն
+      q5: /^head\s*[←=]\s*newNode;?$/i,
+      q6: "2", // Սխալ
+      q7: "1", // O(1)
+      q8: /^prev\.next\s*[←=]\s*temp\.next;?$/i,
+      q9: "2", // Երկկողմանի կապակցված ցուցակ
+      q10: "2" // Քեշի լոկալության խնդիրներ
+    };
+
+    // 3) Check answers function
+    async function checkAnswers() {
+      await loadIds; // ensure IDs are loaded
+
+      const userEmail = localStorage.getItem("userEmail");
+      if (!userEmail) {
+        alert("Մուտք գործեք՝ պատասխանները ուղարկելու համար։");
+        return;
+      }
+
+      const submission = {
+        topic,
+        userEmail,
+        answers: []
+      };
+      
+      let correctCount = 0;
+      const totalCount = 10;
+
+      // local correctness feedback
+      for (let i = 1; i <= 10; i++) {
+        const qid = "q" + i;
+        const resultEl = document.getElementById("result-" + qid);
+        const questionBlock = document.getElementById(qid);
+
+        // read user answer (radio or text)
+        let userAnswer = "";
+        const radios = document.querySelectorAll(`input[name="${qid}"]`);
+        if (radios.length) {
+          radios.forEach(r => r.checked && (userAnswer = r.value));
+        } else {
+          const inp = document.getElementById(qid + "-answer");
+          userAnswer = inp?.value.trim() || "";
+        }
+
+        // push real ID
+        submission.answers.push({
+          questionId: questionIdMap[qid],
+          answer: userAnswer
+        });
+
+        // local check
+        const expect = correct[qid];
+        const isCorrect = expect instanceof RegExp
+          ? expect.test(userAnswer)
+          : userAnswer === expect;
+          
+        if (isCorrect) correctCount++;
+
+        // Apply visual feedback
+        resultEl.textContent = isCorrect ? "✔️ Ճիշտ է" : "❌ Սխալ է";
+        resultEl.className = "result-message result-visible " + (isCorrect ? "correct-answer" : "wrong-answer");
+        
+        // Add pulse animation
+        questionBlock.classList.add('pulse');
+        setTimeout(() => {
+          questionBlock.classList.remove('pulse');
+        }, 500);
+      }
+
+      // submit to backend
+      try {
+        const res = await fetch(API_SUBMIT, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(submission)
+        });
+        if (!res.ok) throw new Error("Submit failed");
+        const data = await res.json();
+
+        if (data.canComplete) {
+          // Success message with confetti effect
+          showSuccessMessage();
+
+          // mark complete
+          await fetch(API_COMPLETE, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ email: userEmail, topicName: topic })
+          });
+        } else {
+          // Show failure message and add "return to topic" button on the page
+          showFailureMessage(correctCount, totalCount);
+        }
+      } catch (e) {
+        console.error(e);
+        alert("Սերվերի սխալ։ Խնդրում ենք փորձել նորից։");
+      }
+    }
+
+    function showFailureMessage(correctCount, totalCount) {
+      // Remove existing result message if any
+      const existingResult = document.getElementById('quiz-result-message');
+      if (existingResult) {
+        existingResult.remove();
+      }
+      
+      // Remove existing return button if any
+      const existingButton = document.getElementById('return-to-topic-btn');
+      if (existingButton) {
+        existingButton.remove();
+      }
+      
+      // Create result message
+      const resultMessage = document.createElement('div');
+      resultMessage.id = 'quiz-result-message';
+      resultMessage.className = 'wrong-answer';
+      resultMessage.style.margin = '30px 0 20px';
+      resultMessage.style.padding = '20px';
+      resultMessage.style.borderRadius = '8px';
+      resultMessage.style.backgroundColor = 'rgba(239, 68, 68, 0.15)';
+      resultMessage.style.color = '#991b1b';
+      resultMessage.style.borderLeft = '4px solid var(--error)';
+      resultMessage.style.fontWeight = '500';
+      resultMessage.style.textAlign = 'center';
+      
+      resultMessage.innerHTML = `
+        <h3 style="font-size: 1.25rem; margin-bottom: 10px;">📚 Ցավոք բավարար չէ</h3>
+        <p>Դուք պատասխանել եք ճիշտ ${correctCount} հարցի ${totalCount}-ից։ Խնդրում ենք վերանայել թեման և փորձել նորից։</p>
+      `;
+      
+      // Create return button
+      const returnButton = document.createElement('button');
+      returnButton.id = 'return-to-topic-btn';
+      returnButton.className = 'check-btn';
+      returnButton.style.backgroundColor = '#6f42c1';
+      returnButton.style.marginTop = '15px';
+      returnButton.textContent = 'Վերադառնալ թեմային';
+      returnButton.style.display = 'block';
+      returnButton.style.width = '100%';
+      returnButton.style.maxWidth = '300px';
+      returnButton.style.margin = '20px auto';
+      
+      const lessonUrl = `../Algorithms/${topic}/${topic.toLowerCase()}.html`;
+      returnButton.addEventListener('click', () => {
+        window.location.href = lessonUrl;
+      });
+      
+      // Add elements to the page
+      const container = document.querySelector('.quiz-container');
+      const checkButton = document.querySelector('.check-btn');
+      
+      container.insertBefore(resultMessage, checkButton);
+      container.insertBefore(returnButton, checkButton);
+      
+      // Scroll to the result message
+      resultMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+
+    function showSuccessMessage() {
+      // Create modal for success message
+      const modal = document.createElement('div');
+      modal.style.position = 'fixed';
+      modal.style.top = '0';
+      modal.style.left = '0';
+      modal.style.width = '100%';
+      modal.style.height = '100%';
+      modal.style.backgroundColor = 'rgba(0,0,0,0.7)';
+      modal.style.zIndex = '1000';
+      modal.style.display = 'flex';
+      modal.style.justifyContent = 'center';
+      modal.style.alignItems = 'center';
+
+      const content = document.createElement('div');
+      content.style.backgroundColor = '#fff';
+      content.style.padding = '30px';
+      content.style.borderRadius = '10px';
+      content.style.textAlign = 'center';
+      content.style.maxWidth = '400px';
+      content.style.animation = 'fadeInUp 0.5s';
+
+      content.innerHTML = `
+        <h2 style="color: #4f46e5; margin-bottom: 15px;">🎉 Շնորհավորում ենք!</h2>
+        <p style="font-size: 1.1rem; margin-bottom: 20px;">Դուք հաջողությամբ անցաք թեստը:</p>
+        <button style="padding: 10px 20px; background: #4f46e5; color: white; border: none; border-radius: 5px; cursor: pointer;">Փակել</button>
+      `;
+
+      modal.appendChild(content);
+      document.body.appendChild(modal);
+
+      // Close button functionality
+      const closeBtn = content.querySelector('button');
+      closeBtn.addEventListener('click', () => {
+        document.body.removeChild(modal);
+        window.location.href = "../home.html";
+      });
+
+      // Add some confetti effect
+      createConfetti();
+    }
+
+    function createConfetti() {
+      const confettiCount = 200;
+      const container = document.createElement('div');
+      container.style.position = 'fixed';
+      container.style.top = '0';
+      container.style.left = '0';
+      container.style.width = '100%';
+      container.style.height = '100%';
+      container.style.pointerEvents = 'none';
+      container.style.zIndex = '1001';
+      document.body.appendChild(container);
+
+      for (let i = 0; i < confettiCount; i++) {
+        const confetti = document.createElement('div');
+        const colors = ['#4f46e5', '#22c55e', '#eab308', '#ef4444', '#06b6d4'];
+
+        confetti.style.position = 'absolute';
+        confetti.style.width = Math.random() * 10 + 5 + 'px';
+        confetti.style.height = Math.random() * 10 + 5 + 'px';
+        confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+        confetti.style.top = '-50px';
+        confetti.style.left = Math.random() * 100 + '%';
+        confetti.style.opacity = Math.random() + 0.5;
+        confetti.style.transform = 'rotate(' + Math.random() * 360 + 'deg)';
+        confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
+
+        container.appendChild(confetti);
+
+        const animation = confetti.animate([
+          { transform: 'translateY(0) rotate(0)', opacity: 1 },
+          { transform: `translateY(${window.innerHeight}px) rotate(${Math.random() * 360}deg)`, opacity: 0 }
+        ], {
+          duration: Math.random() * 3000 + 2000,
+          easing: 'cubic-bezier(.215,.61,.355,1)',
+          fill: 'forwards'
+        });
+
+        animation.onfinish = () => {
+          confetti.remove();
+          if (container.childElementCount === 0) {
+            document.body.removeChild(container);
+          }
+        };
+      }
+    }
+
+    // Add keydown event for Enter key on text inputs
+    document.querySelectorAll('.input-field').forEach(input => {
+      input.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter') {
+          const nextQuestion = this.closest('.question-block').nextElementSibling;
+          if (nextQuestion && nextQuestion.classList.contains('question-block')) {
+            const nextInput = nextQuestion.querySelector('input[type="text"]') ||
+              nextQuestion.querySelector('input[type="radio"]');
+            if (nextInput) {
+              nextInput.focus();
+              if (nextInput.type === 'radio') {
+                nextInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+              }
+            }
+          }
+        }
+      });
+    });
+
+    // Add smooth scrolling to questions
+    document.querySelectorAll('.question-block h2').forEach(heading => {
+      heading.addEventListener('click', function () {
+        const questionBlock = this.closest('.question-block');
+        questionBlock.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      });
+    });
+
+    // Initialize progress tracking
+    document.addEventListener('DOMContentLoaded', function () {
+      trackAnswers();
+      updateProgress();
+
+      // Add keydown event for tab navigation
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Tab') {
+          setTimeout(() => {
+            const activeElement = document.activeElement;
+            if (activeElement && activeElement.closest('.question-block')) {
+              activeElement.closest('.question-block').scrollIntoView({
+                behavior: 'smooth',
+                block: 'center'
+              });
+            }
+          }, 100);
+        }
+      });
+    });
+  </script>
+</body>
+
+</html>

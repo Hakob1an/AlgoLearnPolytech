@@ -1,0 +1,223 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\hakob\\Desktop\\AlgoStructia\\Backend\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{A384143E-7152-4F24-922E-B4A4DB8464AB}|AlgoLearnAPI\\AlgoLearnAPI.csproj|c:\\users\\hakob\\desktop\\algostructia\\backend\\algolearnapi\\controllers\\problemcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A384143E-7152-4F24-922E-B4A4DB8464AB}|AlgoLearnAPI\\AlgoLearnAPI.csproj|solutionrelative:algolearnapi\\controllers\\problemcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A384143E-7152-4F24-922E-B4A4DB8464AB}|AlgoLearnAPI\\AlgoLearnAPI.csproj|c:\\users\\hakob\\desktop\\algostructia\\backend\\algolearnapi\\models\\solvedproblem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A384143E-7152-4F24-922E-B4A4DB8464AB}|AlgoLearnAPI\\AlgoLearnAPI.csproj|solutionrelative:algolearnapi\\models\\solvedproblem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A384143E-7152-4F24-922E-B4A4DB8464AB}|AlgoLearnAPI\\AlgoLearnAPI.csproj|c:\\users\\hakob\\desktop\\algostructia\\backend\\algolearnapi\\services\\profileservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A384143E-7152-4F24-922E-B4A4DB8464AB}|AlgoLearnAPI\\AlgoLearnAPI.csproj|solutionrelative:algolearnapi\\services\\profileservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A384143E-7152-4F24-922E-B4A4DB8464AB}|AlgoLearnAPI\\AlgoLearnAPI.csproj|c:\\users\\hakob\\desktop\\algostructia\\backend\\algolearnapi\\controllers\\profilecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A384143E-7152-4F24-922E-B4A4DB8464AB}|AlgoLearnAPI\\AlgoLearnAPI.csproj|solutionrelative:algolearnapi\\controllers\\profilecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A384143E-7152-4F24-922E-B4A4DB8464AB}|AlgoLearnAPI\\AlgoLearnAPI.csproj|c:\\users\\hakob\\desktop\\algostructia\\backend\\algolearnapi\\data\\appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A384143E-7152-4F24-922E-B4A4DB8464AB}|AlgoLearnAPI\\AlgoLearnAPI.csproj|solutionrelative:algolearnapi\\data\\appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A384143E-7152-4F24-922E-B4A4DB8464AB}|AlgoLearnAPI\\AlgoLearnAPI.csproj|c:\\users\\hakob\\desktop\\algostructia\\backend\\algolearnapi\\models\\topic.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A384143E-7152-4F24-922E-B4A4DB8464AB}|AlgoLearnAPI\\AlgoLearnAPI.csproj|solutionrelative:algolearnapi\\models\\topic.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A384143E-7152-4F24-922E-B4A4DB8464AB}|AlgoLearnAPI\\AlgoLearnAPI.csproj|c:\\users\\hakob\\desktop\\algostructia\\backend\\algolearnapi\\models\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A384143E-7152-4F24-922E-B4A4DB8464AB}|AlgoLearnAPI\\AlgoLearnAPI.csproj|solutionrelative:algolearnapi\\models\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A384143E-7152-4F24-922E-B4A4DB8464AB}|AlgoLearnAPI\\AlgoLearnAPI.csproj|c:\\users\\hakob\\desktop\\algostructia\\backend\\algolearnapi\\controllers\\dashboardcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A384143E-7152-4F24-922E-B4A4DB8464AB}|AlgoLearnAPI\\AlgoLearnAPI.csproj|solutionrelative:algolearnapi\\controllers\\dashboardcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A384143E-7152-4F24-922E-B4A4DB8464AB}|AlgoLearnAPI\\AlgoLearnAPI.csproj|c:\\users\\hakob\\desktop\\algostructia\\backend\\algolearnapi\\services\\authservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A384143E-7152-4F24-922E-B4A4DB8464AB}|AlgoLearnAPI\\AlgoLearnAPI.csproj|solutionrelative:algolearnapi\\services\\authservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A384143E-7152-4F24-922E-B4A4DB8464AB}|AlgoLearnAPI\\AlgoLearnAPI.csproj|c:\\users\\hakob\\desktop\\algostructia\\backend\\algolearnapi\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A384143E-7152-4F24-922E-B4A4DB8464AB}|AlgoLearnAPI\\AlgoLearnAPI.csproj|solutionrelative:algolearnapi\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A384143E-7152-4F24-922E-B4A4DB8464AB}|AlgoLearnAPI\\AlgoLearnAPI.csproj|c:\\users\\hakob\\desktop\\algostructia\\backend\\algolearnapi\\models\\suggestion.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A384143E-7152-4F24-922E-B4A4DB8464AB}|AlgoLearnAPI\\AlgoLearnAPI.csproj|solutionrelative:algolearnapi\\models\\suggestion.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A384143E-7152-4F24-922E-B4A4DB8464AB}|AlgoLearnAPI\\AlgoLearnAPI.csproj|c:\\users\\hakob\\desktop\\algostructia\\backend\\algolearnapi\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A384143E-7152-4F24-922E-B4A4DB8464AB}|AlgoLearnAPI\\AlgoLearnAPI.csproj|solutionrelative:algolearnapi\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "ProblemController.cs",
+              "DocumentMoniker": "C:\\Users\\hakob\\Desktop\\AlgoStructia\\Backend\\AlgoLearnAPI\\Controllers\\ProblemController.cs",
+              "RelativeDocumentMoniker": "AlgoLearnAPI\\Controllers\\ProblemController.cs",
+              "ToolTip": "C:\\Users\\hakob\\Desktop\\AlgoStructia\\Backend\\AlgoLearnAPI\\Controllers\\ProblemController.cs",
+              "RelativeToolTip": "AlgoLearnAPI\\Controllers\\ProblemController.cs",
+              "ViewState": "AgIAADsAAAAAAAAAAAAgwEwAAAAVAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-17T13:16:17.78Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Topic.cs",
+              "DocumentMoniker": "C:\\Users\\hakob\\Desktop\\AlgoStructia\\Backend\\AlgoLearnAPI\\Models\\Topic.cs",
+              "RelativeDocumentMoniker": "AlgoLearnAPI\\Models\\Topic.cs",
+              "ToolTip": "C:\\Users\\hakob\\Desktop\\AlgoStructia\\Backend\\AlgoLearnAPI\\Models\\Topic.cs",
+              "RelativeToolTip": "AlgoLearnAPI\\Models\\Topic.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAgAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-17T12:55:14.381Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "SolvedProblem.cs",
+              "DocumentMoniker": "C:\\Users\\hakob\\Desktop\\AlgoStructia\\Backend\\AlgoLearnAPI\\Models\\SolvedProblem.cs",
+              "RelativeDocumentMoniker": "AlgoLearnAPI\\Models\\SolvedProblem.cs",
+              "ToolTip": "C:\\Users\\hakob\\Desktop\\AlgoStructia\\Backend\\AlgoLearnAPI\\Models\\SolvedProblem.cs",
+              "RelativeToolTip": "AlgoLearnAPI\\Models\\SolvedProblem.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAnAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-17T12:53:14.106Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "ProfileService.cs",
+              "DocumentMoniker": "C:\\Users\\hakob\\Desktop\\AlgoStructia\\Backend\\AlgoLearnAPI\\Services\\ProfileService.cs",
+              "RelativeDocumentMoniker": "AlgoLearnAPI\\Services\\ProfileService.cs",
+              "ToolTip": "C:\\Users\\hakob\\Desktop\\AlgoStructia\\Backend\\AlgoLearnAPI\\Services\\ProfileService.cs",
+              "RelativeToolTip": "AlgoLearnAPI\\Services\\ProfileService.cs",
+              "ViewState": "AgIAADsAAAAAAAAAAAAAAEgAAAAvAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-17T12:47:07.875Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "ProfileController.cs",
+              "DocumentMoniker": "C:\\Users\\hakob\\Desktop\\AlgoStructia\\Backend\\AlgoLearnAPI\\Controllers\\ProfileController.cs",
+              "RelativeDocumentMoniker": "AlgoLearnAPI\\Controllers\\ProfileController.cs",
+              "ToolTip": "C:\\Users\\hakob\\Desktop\\AlgoStructia\\Backend\\AlgoLearnAPI\\Controllers\\ProfileController.cs",
+              "RelativeToolTip": "AlgoLearnAPI\\Controllers\\ProfileController.cs",
+              "ViewState": "AgIAACYAAAAAAAAAAAAuwDwAAAANAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-17T12:46:49.549Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "DashboardController.cs",
+              "DocumentMoniker": "C:\\Users\\hakob\\Desktop\\AlgoStructia\\Backend\\AlgoLearnAPI\\Controllers\\DashboardController.cs",
+              "RelativeDocumentMoniker": "AlgoLearnAPI\\Controllers\\DashboardController.cs",
+              "ToolTip": "C:\\Users\\hakob\\Desktop\\AlgoStructia\\Backend\\AlgoLearnAPI\\Controllers\\DashboardController.cs",
+              "RelativeToolTip": "AlgoLearnAPI\\Controllers\\DashboardController.cs",
+              "ViewState": "AgIAAFYBAAAAAAAAAAAIwF0BAAA2AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-17T06:36:39.762Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "Suggestion.cs",
+              "DocumentMoniker": "C:\\Users\\hakob\\Desktop\\AlgoStructia\\Backend\\AlgoLearnAPI\\Models\\Suggestion.cs",
+              "RelativeDocumentMoniker": "AlgoLearnAPI\\Models\\Suggestion.cs",
+              "ToolTip": "C:\\Users\\hakob\\Desktop\\AlgoStructia\\Backend\\AlgoLearnAPI\\Models\\Suggestion.cs",
+              "RelativeToolTip": "AlgoLearnAPI\\Models\\Suggestion.cs",
+              "ViewState": "AgIAAAgAAAAAAAAAAAAAwBYAAAAuAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-17T06:08:03.798Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "AuthController.cs",
+              "DocumentMoniker": "C:\\Users\\hakob\\Desktop\\AlgoStructia\\Backend\\AlgoLearnAPI\\Controllers\\AuthController.cs",
+              "RelativeDocumentMoniker": "AlgoLearnAPI\\Controllers\\AuthController.cs",
+              "ToolTip": "C:\\Users\\hakob\\Desktop\\AlgoStructia\\Backend\\AlgoLearnAPI\\Controllers\\AuthController.cs",
+              "RelativeToolTip": "AlgoLearnAPI\\Controllers\\AuthController.cs",
+              "ViewState": "AgIAAKsAAAAAAAAAAAAuwMcAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-11T18:13:37.477Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "AppDbContext.cs",
+              "DocumentMoniker": "C:\\Users\\hakob\\Desktop\\AlgoStructia\\Backend\\AlgoLearnAPI\\Data\\AppDbContext.cs",
+              "RelativeDocumentMoniker": "AlgoLearnAPI\\Data\\AppDbContext.cs",
+              "ToolTip": "C:\\Users\\hakob\\Desktop\\AlgoStructia\\Backend\\AlgoLearnAPI\\Data\\AppDbContext.cs",
+              "RelativeToolTip": "AlgoLearnAPI\\Data\\AppDbContext.cs",
+              "ViewState": "AgIAAAkAAAAAAAAAAAA1wBUAAABAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-01T16:12:25.285Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "AuthService.cs",
+              "DocumentMoniker": "C:\\Users\\hakob\\Desktop\\AlgoStructia\\Backend\\AlgoLearnAPI\\Services\\AuthService.cs",
+              "RelativeDocumentMoniker": "AlgoLearnAPI\\Services\\AuthService.cs",
+              "ToolTip": "C:\\Users\\hakob\\Desktop\\AlgoStructia\\Backend\\AlgoLearnAPI\\Services\\AuthService.cs",
+              "RelativeToolTip": "AlgoLearnAPI\\Services\\AuthService.cs",
+              "ViewState": "AgIAAFUAAAAAAAAAAAAuwIkAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-17T05:15:45.317Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "User.cs",
+              "DocumentMoniker": "C:\\Users\\hakob\\Desktop\\AlgoStructia\\Backend\\AlgoLearnAPI\\Models\\User.cs",
+              "RelativeDocumentMoniker": "AlgoLearnAPI\\Models\\User.cs",
+              "ToolTip": "C:\\Users\\hakob\\Desktop\\AlgoStructia\\Backend\\AlgoLearnAPI\\Models\\User.cs",
+              "RelativeToolTip": "AlgoLearnAPI\\Models\\User.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABgAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-16T17:55:09.393Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\hakob\\Desktop\\AlgoStructia\\Backend\\AlgoLearnAPI\\Program.cs",
+              "RelativeDocumentMoniker": "AlgoLearnAPI\\Program.cs",
+              "ToolTip": "C:\\Users\\hakob\\Desktop\\AlgoStructia\\Backend\\AlgoLearnAPI\\Program.cs",
+              "RelativeToolTip": "AlgoLearnAPI\\Program.cs",
+              "ViewState": "AgIAABIAAAAAAAAAAAAAACYAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-23T19:08:43.982Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

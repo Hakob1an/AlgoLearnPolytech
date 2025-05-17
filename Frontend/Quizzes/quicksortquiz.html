@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="hy">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Արագ տեսակավորման Թեստ | AlgoLearn</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f0f0f0;
+      padding: 20px;
+      color: #333;
+    }
+
+    .quiz-container {
+      max-width: 800px;
+      margin: 0 auto;
+      background: #fff;
+      padding: 30px 40px;
+      border-radius: 6px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 1.6rem;
+      margin-bottom: 30px;
+    }
+
+    .question-block {
+      margin-bottom: 30px;
+    }
+
+    h2 {
+      font-size: 1.1rem;
+      margin-bottom: 12px;
+    }
+
+    ul {
+      list-style: none;
+      padding-left: 0;
+    }
+
+    li {
+      margin-bottom: 8px;
+    }
+
+    input[type="radio"] {
+      margin-right: 10px;
+    }
+
+    input[type="text"] {
+      width: 100%;
+      padding: 8px;
+      font-size: 1rem;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+      margin-top: 10px;
+    }
+
+    .code-snippet {
+      background-color: #f9f9f9;
+      border: 1px solid #ccc;
+      padding: 10px;
+      border-radius: 4px;
+      margin-bottom: 10px;
+      font-family: Consolas, monospace;
+      white-space: pre-wrap;
+    }
+
+    .check-btn {
+      display: block;
+      margin: 30px auto 0;
+      padding: 10px 25px;
+      background-color: #6f42c1;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+
+    .check-btn:hover {
+      background-color: #5f38a9;
+    }
+
+    .result-message {
+      margin-top: 10px;
+      font-style: italic;
+      font-size: 0.95rem;
+    }
+
+    .correct-answer {
+      color: green;
+      font-weight: bold;
+    }
+
+    .wrong-answer {
+      color: red;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div class="quiz-container">
+    <h1>Արագ տեսակավորման Թեստ</h1>
+    <div id="quiz"></div>
+    <button class="check-btn" onclick="submitQuiz()">Ստուգել պատասխանները</button>
+  </div>
+
+  <script>
+    const topic = "QuickSort";
+    const API_URL = "https://localhost:7045/api/quiz/submit";
+    const COMPLETE_URL = "https://localhost:7045/api/dashboard/complete";
+
+    const questions = [
+      {
+        id: 1, text: "Որն է Արագ տեսակավորման միջին ժամանակային բարդությունը?",
+        type: "multiple",
+        choices: ["O(n)", "O(n²)", "O(n log n)", "O(1)"]
+      },
+      {
+        id: 2, text: "Որն է Արագ տեսակավորման վատագույն դեպքի բարդությունը?",
+        type: "multiple",
+        choices: ["O(n)", "O(n²)", "O(n log n)", "O(1)"]
+      },
+      {
+        id: 3, text: "Ինչպես է աշխատում Արագ տեսակավորումը?",
+        type: "multiple",
+        choices: [
+          "Բաժանում է զանգվածը երկու կեսի և տեսակավորում դրանք ռեկուրսիվ կերպով",
+          "Մասնատում է զանգվածն առանցքային տարրի շուրջ և տեսակավորում ենթազանգվածները",
+          "Համեմատում է հարևան տարրերը և փոխարինում դրանք անհրաժեշտության դեպքում",
+          "Կառուցում է տեսակավորված ցուցակ չտեսակավորված տարրերից"
+        ]
+      },
+      {
+        id: 4, text: "Որն է լավագույն ընտրությունը առանցքային տարրի համար՝ արդյունավետությունը բարելավելու համար?",
+        type: "multiple",
+        choices: [
+          "Առաջին տարրը", "Վերջին տարրը", "Երեքի մեդիանը", "Պատահական տարր"
+        ]
+      },
+      {
+        id: 5, text: "Որն է Արագ տեսակավորման տարածական բարդությունը?",
+        type: "multiple",
+        choices: ["O(1)", "O(n)", "O(log n)", "O(n²)"]
+      },
+      {
+        id: 6, text: "Լրացրու բացակայող մասը այս Արագ տեսակավորման պսևդոկոդում․",
+        code: `Procedure Partition(arr, low, high):
+  pivot ← arr[high]
+  i ← low - 1
+
+  For j from low to high - 1:
+    If arr[j] ≤ pivot:
+      i ← i + 1
+      _______
+
+  Swap arr[i + 1] ↔ arr[high]
+  Return i + 1`,
+        type: "regex",
+        answer: "/^swap\s+arr\[\s*i\s*\]\s+(and|↔)\s+arr\[\s*j\s*\];?$/i"
+      },
+      {
+        id: 7, text: "Արագ տեսակավորումը կայուն տեսակավորման ալգորիթմ է։",
+        type: "multiple",
+        choices: ["Ճիշտ", "Սխալ"]
+      },
+      {
+        id: 8, text: "Ի՞նչ տիպի ալգորիթմ է Արագ տեսակավորումը:",
+        type: "multiple",
+        choices: [
+          "Բաժանիր և տիրիր (Divide and conquer)",
+          "Ագահ (Greedy)",
+          "Դինամիկ ծրագրավորում (Dynamic programming)",
+          "Համատարած որոնում (Brute force)"
+        ]
+      },
+      {
+        id: 9, text: "Որն է հիմնական դեպքը Արագ տեսակավորման ռեկուրսիվ ֆունկցիայի համար։",
+        type: "regex",
+        answer: /(1\s*կամ\s*0|0\s*կամ\s*1|1|0)/i
+      },
+      {
+        id: 10, text: "Ինչու է Արագ տեսակավորումը նախընտրելի Merge Sort-ի նկատմամբ գործնականում?",
+        type: "multiple",
+        choices: [
+          "Արագ տեսակավորումն ավելի արդյունավետ է հիշողության առումով",
+          "Արագ տեսակավորումն ունի ավելի լավ ժամանակային բարդություն",
+          "Արագ տեսակավորումը միշտ տալիս է կայուն արդյունքներ",
+          "Արագ տեսակավորումն ավելի հեշտ է իրականացնել"
+        ]
+      }
+    ];
+
+    const correct = {
+      1: "3", 2: "2", 3: "2", 4: "3", 5: "1",
+      6: /^swap\s+arr\[\s*i\s*\]\s+(and|↔)\s+arr\[\s*j\s*\];?$/i, 7: "2", 8: "1", 9: /(1\s*կամ\s*0|0\s*կամ\s*1|1|0)/i, 10: "1"
+    };
+
+    const quizEl = document.getElementById("quiz");
+
+    questions.forEach(q => {
+      const block = document.createElement("div");
+      block.className = "question-block";
+
+      const h2 = document.createElement("h2");
+      h2.textContent = `${q.id}. ${q.text}`;
+      block.appendChild(h2);
+
+      if (q.code) {
+        const codeBox = document.createElement("div");
+        codeBox.className = "code-snippet";
+        codeBox.textContent = q.code;
+        block.appendChild(codeBox);
+      }
+
+      if (q.type === "multiple") {
+        const ul = document.createElement("ul");
+        q.choices.forEach((choice, index) => {
+          const li = document.createElement("li");
+          li.innerHTML = `<label><input type="radio" name="q${q.id}" value="${index + 1}"> ${choice}</label>`;
+          ul.appendChild(li);
+        });
+        block.appendChild(ul);
+      } else {
+        const input = document.createElement("input");
+        input.type = "text";
+        input.placeholder = "Քո պատասխանը...";
+        input.id = `q${q.id}-answer`;
+        block.appendChild(input);
+      }
+
+      const result = document.createElement("p");
+      result.id = `result-q${q.id}`;
+      result.className = "result-message";
+      block.appendChild(result);
+
+      quizEl.appendChild(block);
+    });
+
+    async function submitQuiz() {
+      const email = localStorage.getItem("userEmail");
+      if (!email) return alert("Մուտք գործեք նախքան թեստը հանձնելը։");
+
+      let correctCount = 0;
+      const answers = [];
+
+      for (let q of questions) {
+        let userAnswer = "";
+        const result = document.getElementById(`result-q${q.id}`);
+
+        if (q.type === "multiple") {
+          const selected = document.querySelector(`input[name="q${q.id}"]:checked`);
+          if (selected) userAnswer = selected.value;
+        } else {
+          const input = document.getElementById(`q${q.id}-answer`);
+          userAnswer = input ? input.value.trim() : "";
+        }
+
+        let isCorrect = false;
+        if (correct[q.id] instanceof RegExp) {
+          isCorrect = correct[q.id].test(userAnswer);
+        } else {
+          isCorrect = userAnswer === correct[q.id];
+        }
+
+        result.textContent = isCorrect ? "✔️ Ճիշտ է" : "❌ Սխալ է";
+        result.className = "result-message " + (isCorrect ? "correct-answer" : "wrong-answer");
+
+        if (isCorrect) correctCount++;
+        answers.push({ questionId: q.id, answer: userAnswer });
+      }
+
+      const res = await fetch(API_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ topic, userEmail: email, answers })
+      });
+
+      const result = await res.json();
+      if (result.canComplete) {
+        alert("🎉 Շնորհավորանքներ, դուք հաջողությամբ անցաք թեստը։");
+
+        await fetch(COMPLETE_URL, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email, topicName: topic })
+        });
+      } else {
+        alert("📚 Դուք սխալ եք պատասխանել մի քանի հարցի։ Խնդրում ենք վերանայել նյութը և փորձել նորից։");
+      }
+    }
+  </script>
+</body>
+</html>

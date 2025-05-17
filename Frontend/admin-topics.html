@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="hy">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ադմին | AlgoLearn</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        main {
+            max-width: 1100px;
+            margin: 2rem auto;
+            padding: 1rem;
+        }
+
+        h1 {
+            color: var(--primary);
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .topic-card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .topic-card h3 {
+            color: var(--text);
+            margin-bottom: 8px;
+        }
+
+        .topic-card p {
+            color: var(--text-light);
+            font-size: 14px;
+            margin-bottom: 12px;
+        }
+
+        .topic-card button {
+            margin-right: 10px;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            padding: 8px 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .topic-card button:hover {
+            background-color: var(--primary-dark);
+        }
+
+        .topic-card .status {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-light);
+        }
+
+        /* Edit Modal */
+        #edit-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #edit-modal .modal-content {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            width: 500px;
+            max-width: 95%;
+        }
+
+        #edit-modal textarea {
+            width: 100%;
+            padding: 10px;
+            font-size: 1rem;
+        }
+
+        #edit-modal button {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <a href="admin-home.html" class="logo">
+                    <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M15 3C8.373 3 3 8.373 3 15C3 21.627 8.373 27 15 27C21.627 27 27 21.627 27 15C27 8.373 21.627 3 15 3Z"
+                            stroke="#6e43bc" stroke-width="2" />
+                        <circle cx="10" cy="10" r="2" fill="#6e43bc" />
+                        <circle cx="20" cy="10" r="2" fill="#6e43bc" />
+                        <circle cx="15" cy="15" r="2" fill="#6e43bc" />
+                        <circle cx="10" cy="20" r="2" fill="#6e43bc" />
+                        <circle cx="20" cy="20" r="2" fill="#6e43bc" />
+                        <line x1="10" y1="10" x2="20" y2="10" stroke="#6e43bc" />
+                        <line x1="10" y1="10" x2="15" y2="15" stroke="#6e43bc" />
+                        <line x1="20" y1="10" x2="15" y2="15" stroke="#6e43bc" />
+                        <line x1="10" y1="20" x2="15" y2="15" stroke="#6e43bc" />
+                        <line x1="20" y1="20" x2="15" y2="15" stroke="#6e43bc" />
+                    </svg>
+                    AlgoLearn Ադմին
+                </a>
+                <ul class="nav-links">
+                    <li><a href="admin-home.html" class="active">Վահանակ</a></li>
+                    <li><a href="login.html" class="logout" onclick="localStorage.clear()">Ելք</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <h1>Թեմաների Կառավարում</h1>
+        <div id="topics-container"></div>
+    </main>
+
+    <!-- Մոդալ պատուհան խմբագրման համար -->
+    <div id="edit-modal">
+        <div class="modal-content">
+            <h3>Խմբագրել բովանդակությունը</h3>
+            <textarea id="edit-text" rows="8"></textarea>
+            <br><br>
+            <button onclick="saveEditedText()">Պահպանել</button>
+            <button onclick="closeEditModal()">Փակել</button>
+        </div>
+    </div>
+
+    <script>
+        const BASE_URL = "https://localhost:7045";
+        let editingCard = null;
+      
+        function getArmenianName(engName) {
+          const map = {
+            "BubbleSort": "Պղպջակային սորտավորում",
+            "Dijkstra": "Դեյկստրայի ալգորիթմ",
+            "QuickSort": "Արագ սորտավորում",
+            "InsertionSort": "Ներդրմամբ սորտավորում",
+            "LinkedList": "Կապակցված ցուցակ",
+            "BinarySearchTree": "Երկուական որոնման ծառ",
+            "Stack": "Ստեկ"
+          };
+          return map[engName] || engName;
+        }
+      
+        document.addEventListener("DOMContentLoaded", async () => {
+          const container = document.getElementById("topics-container");
+      
+          try {
+            const res = await fetch(`${BASE_URL}/api/Topic`, {
+              headers: { "X-Is-Admin": "true" }
+            });
+      
+            if (!res.ok) throw new Error("Չհաջողվեց ստանալ թեմաներ");
+      
+            const topics = await res.json();
+            container.innerHTML = "";
+      
+            topics.forEach(topic => {
+              const card = document.createElement("div");
+              card.className = "topic-card";
+              card.style.cursor = "pointer";
+              card.setAttribute("data-id", topic.id);
+              card.setAttribute("data-hidden", topic.isHidden);
+      
+              const toggleText = topic.isHidden ? "Դարձնել տեսանելի" : "Թաքցնել";
+              const hiddenLabel = topic.isHidden ? "<span style='color:#f97316;font-weight:600;'>🕶 Թաքցված է</span>" : "";
+      
+              card.innerHTML = `
+                <h3>${getArmenianName(topic.name)}</h3>
+                ${hiddenLabel}
+                <p>${topic.content || ""}</p>
+                <div class="status">${topic.isHidden ? "Թաքցված է" : "Տեսանելի է"}</div>
+                <button class="toggle-btn" onclick="event.stopPropagation(); toggleVisibility(${topic.id}, ${topic.isHidden}, this)">
+                  ${toggleText}
+                </button>
+                <button onclick="event.stopPropagation(); editTopic(${topic.id})">Խմբագրել</button>
+              `;
+      
+              card.addEventListener("click", () => {
+                const pageFolder = topic.name;
+                const fileName = topic.name.toLowerCase();
+                window.location.href = `../Algorithms/${pageFolder}/${fileName}.html`;
+              });
+      
+              container.appendChild(card);
+            });
+          } catch (err) {
+            container.innerHTML = "<p>Սխալ է տեղի ունեցել թեմաների բեռնելու ժամանակ։</p>";
+            console.error("❌ Fetch error:", err);
+          }
+        });
+      
+        function toggleVisibility(id, isHidden, btn) {
+          const action = isHidden ? "unhide" : "hide";
+      
+          fetch(`${BASE_URL}/api/Topic/${id}/${action}`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" }
+          }).then(() => {
+            const card = btn.closest(".topic-card");
+            const status = card.querySelector(".status");
+      
+            const newHidden = !isHidden;
+            status.textContent = newHidden ? "Թաքցված է" : "Տեսանելի է";
+            btn.textContent = newHidden ? "Դարձնել տեսանելի" : "Թաքցնել";
+            btn.setAttribute("onclick", `event.stopPropagation(); toggleVisibility(${id}, ${newHidden}, this)`);
+      
+            // Update the visibility label if needed
+            const h3 = card.querySelector("h3");
+            let existingLabel = card.querySelector("span");
+            if (newHidden) {
+              if (!existingLabel) {
+                h3.insertAdjacentHTML("afterend", `<span style='color:#f97316;font-weight:600;'>🕶 Թաքցված է</span>`);
+              }
+            } else {
+              if (existingLabel) existingLabel.remove();
+            }
+      
+          }).catch(err => {
+            console.error("❌ Visibility toggle error:", err);
+          });
+        }
+      
+        function editTopic(id) {
+          const card = document.querySelector(`.topic-card[data-id="${id}"]`);
+          const topicName = card.querySelector("h3").textContent.trim();
+      
+          const reverseMap = {
+            "Պղպջակային սորտավորում": "BubbleSort",
+            "Դեյկստրայի ալգորիթմ": "Dijkstra",
+            "Արագ սորտավորում": "QuickSort",
+            "Ներդրմամբ սորտավորում": "InsertionSort",
+            "Կապակցված ցուցակ": "LinkedList",
+            "Երկուական որոնման ծառ": "BinarySearchTree",
+            "Ստեկ": "Stack"
+          };
+      
+          const engName = reverseMap[topicName];
+          if (!engName) return alert("Չհաջողվեց բացել էջը․ անունը անհայտ է։");
+      
+          const folder = engName;
+          const file = engName.toLowerCase();
+          const fullPath = `../Algorithms/${folder}/${file}.html`;
+      
+          window.open(fullPath, "_blank");
+        }
+      
+        function saveEditedText() {
+          const newText = document.getElementById("edit-text").value.trim();
+          if (!editingCard) return;
+          editingCard.querySelector("p").textContent = newText || "Առայժմ բացատրություն չկա։";
+          closeEditModal();
+        }
+      
+        function closeEditModal() {
+          editingCard = null;
+          document.getElementById("edit-modal").style.display = "none";
+        }
+      </script>
+           
+      
+</body>
+
+</html>

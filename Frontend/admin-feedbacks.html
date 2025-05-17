@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="hy">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ադմին | AlgoLearn</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        main {
+            padding: 60px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .card {
+            background: var(--card-bg);
+            padding: 30px;
+            margin-bottom: 24px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            max-width: 700px;
+            width: 100%;
+        }
+
+        .card h3 {
+            margin-bottom: 8px;
+            color: var(--primary);
+        }
+
+        .card p {
+            margin: 6px 0;
+            color: var(--text);
+        }
+
+        .reply-area {
+            margin-top: 16px;
+        }
+
+        textarea {
+            width: 100%;
+            border-radius: 8px;
+            padding: 12px;
+            border: 1px solid var(--border);
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .btn-reply {
+            margin-top: 10px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        h1 {
+            font-size: 2rem;
+          
+            color: var(--primary-dark);
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: var(--text);
+        }
+
+        .btn-reply:hover {
+            background: var(--primary-dark);
+        }
+
+        .no-feedback {
+            margin-top: 40px;
+            font-size: 1.1rem;
+            color: var(--text-light);
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <a href="admin-home.html" class="logo">
+                    <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M15 3C8.373 3 3 8.373 3 15C3 21.627 8.373 27 15 27C21.627 27 27 21.627 27 15C27 8.373 21.627 3 15 3Z"
+                            stroke="#6e43bc" stroke-width="2" />
+                        <circle cx="10" cy="10" r="2" fill="#6e43bc" />
+                        <circle cx="20" cy="10" r="2" fill="#6e43bc" />
+                        <circle cx="15" cy="15" r="2" fill="#6e43bc" />
+                        <circle cx="10" cy="20" r="2" fill="#6e43bc" />
+                        <circle cx="20" cy="20" r="2" fill="#6e43bc" />
+                        <line x1="10" y1="10" x2="20" y2="10" stroke="#6e43bc" />
+                        <line x1="10" y1="10" x2="15" y2="15" stroke="#6e43bc" />
+                        <line x1="20" y1="10" x2="15" y2="15" stroke="#6e43bc" />
+                        <line x1="10" y1="20" x2="15" y2="15" stroke="#6e43bc" />
+                        <line x1="20" y1="20" x2="15" y2="15" stroke="#6e43bc" />
+                    </svg>
+                    AlgoLearn Ադմին
+                </a>
+                <ul class="nav-links">
+                    <li><a href="admin-home.html" class="active">Վահանակ</a></li>
+                    <li><a href="login.html" class="logout" onclick="localStorage.clear()">Ելք</a></li>
+                </ul>
+            </nav>
+        </div>
+        </nav>
+    </header>
+
+    <main>
+        <h1>Ստացված կարծիքներ և առաջարկություններ</h1>
+        <br>
+        <div id="feedbackContainer">
+            <p class="no-feedback">Բեռնում ենք կարծիքները...</p>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 AlgoLearn Ադմին. Բոլոր իրավունքները պաշտպանված են։</p>
+    </footer>
+
+    <script>
+        const BASE_URL = "https://localhost:7045";
+        const container = document.getElementById("feedbackContainer");
+
+        document.addEventListener("DOMContentLoaded", async () => {
+            try {
+                const res = await fetch(`${BASE_URL}/api/feedback/all`);
+                const data = await res.json();
+
+                container.innerHTML = "";
+
+                if (!res.ok || !data.length) {
+                    container.innerHTML = "<p class='no-feedback'>Այս պահին կարծիքներ չկան։</p>";
+                    return;
+                }
+
+                data.forEach(fb => {
+                    const card = document.createElement("div");
+                    card.className = "card";
+                    card.innerHTML = `
+            <h3>📧 ${fb.email}</h3>
+            <p><strong>Թեմա:</strong> ${fb.subject}</p>
+            <p><strong>Հաղորդագրություն:</strong> ${fb.message}</p>
+            <p style="color:gray; font-size: 0.9rem;">🕒 ${new Date(fb.createdAt).toLocaleString("hy-AM")}</p>
+            <div class="reply-area">
+              <label for="reply-${fb.id}">Պատասխան:</label>
+              <textarea id="reply-${fb.id}" placeholder="Ձեր պատասխանը..."></textarea>
+              <button class="btn-reply" onclick="sendReply('${fb.email}', document.getElementById('reply-${fb.id}').value)">Ուղարկել պատասխան</button>
+            </div>
+          `;
+                    container.appendChild(card);
+                });
+            } catch (err) {
+                console.error("❌ Feedback fetch error:", err);
+                container.innerHTML = "<p class='no-feedback'>Սխալ տեղի ունեցավ կարծիքները բեռնելիս։</p>";
+            }
+        });
+
+        async function sendReply(email, message) {
+            if (!message.trim()) {
+                alert("Խնդրում ենք մուտքագրել պատասխանի տեքստ։");
+                return;
+            }
+
+            try {
+                const res = await fetch(`${BASE_URL}/api/feedback/reply`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ email, message })
+                });
+
+                const result = await res.json();
+                if (res.ok) {
+                    alert("✅ Պատասխանը հաջողությամբ ուղարկվեց։");
+                } else {
+                    alert(result.message || "❌ Խնդիր առաջացավ։");
+                }
+            } catch (err) {
+                alert("❌ Ցանցային սխալ։");
+            }
+        }
+    </script>
+</body>
+
+</html>

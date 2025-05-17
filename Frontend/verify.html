@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="hy">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Էլեկտրոնային փոստի հաստատում</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    main {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .verify-container {
+      background-color: var(--card-bg);
+      padding: 50px 40px;
+      border-radius: 16px;
+      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.05);
+      width: 100%;
+      max-width: 460px;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 10px;
+      color: var(--primary);
+      font-size: 1.9rem;
+    }
+
+    p.description {
+      text-align: center;
+      margin-bottom: 30px;
+      color: var(--text-light);
+    }
+
+    input {
+      width: 100%;
+      padding: 14px;
+      font-size: 1.05rem;
+      margin-bottom: 16px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      transition: border 0.2s ease;
+    }
+
+    input:focus {
+      border-color: var(--primary);
+      outline: none;
+    }
+
+    button {
+      width: 100%;
+      padding: 14px;
+      background-color: var(--gray);
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-size: 1.05rem;
+      font-weight: 600;
+      cursor: not-allowed;
+      transition: background-color 0.2s ease, cursor 0.2s ease;
+    }
+
+    button.enabled {
+      background-color: var(--primary);
+      cursor: pointer;
+    }
+
+    button.enabled:hover {
+      background-color: var(--primary-dark);
+    }
+
+    .error-container,
+    .success-container {
+      text-align: center;
+      margin-top: 20px;
+      font-weight: 500;
+      display: none;
+    }
+
+    .error-container {
+      color: var(--danger);
+    }
+
+    .success-container {
+      color: var(--success);
+    }
+
+    @media (max-width: 480px) {
+      .verify-container {
+        padding: 30px 20px;
+      }
+
+      h2 {
+        font-size: 1.5rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <div class="container">
+      <nav>
+        <a href="home.html" class="logo">
+          <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M15 3C8.373 3 3 8.373 3 15C3 21.627 8.373 27 15 27C21.627 27 27 21.627 27 15C27 8.373 21.627 3 15 3Z"
+              stroke="#6e43bc" stroke-width="2" />
+            <circle cx="10" cy="10" r="2" fill="#6e43bc" />
+            <circle cx="20" cy="10" r="2" fill="#6e43bc" />
+            <circle cx="15" cy="15" r="2" fill="#6e43bc" />
+            <circle cx="10" cy="20" r="2" fill="#6e43bc" />
+            <circle cx="20" cy="20" r="2" fill="#6e43bc" />
+            <line x1="10" y1="10" x2="20" y2="10" stroke="#6e43bc" />
+            <line x1="10" y1="10" x2="15" y2="15" stroke="#6e43bc" />
+            <line x1="20" y1="10" x2="15" y2="15" stroke="#6e43bc" />
+            <line x1="10" y1="20" x2="15" y2="15" stroke="#6e43bc" />
+            <line x1="20" y1="20" x2="15" y2="15" stroke="#6e43bc" />
+          </svg>
+          AlgoLearn
+        </a>
+        <ul class="nav-links">
+          <li><a href="home.html" class="active">Գլխավոր</a></li>
+          <li><a href="learn.html">Ուսուցում</a></li>
+          <li><a href="about.html">Մեր Մասին</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="verify-container">
+      <h2>Էլեկտրոնային փոստի հաստատում</h2>
+      <p class="description">Մուտքագրեք ձեր էլ․ փոստին ուղարկված 6-նիշանոց կոդը։</p>
+      <input type="email" id="verification-email" placeholder="Մուտքագրեք էլ․ փոստը" required />
+      <input type="text" id="verification-code" placeholder="Մուտքագրեք կոդը" maxlength="6" inputmode="numeric"
+        pattern="[0-9]*" required />
+      <button id="verify-button" disabled>Հաստատել</button>
+      <p id="timer-display" style="text-align:center; margin-top: 15px; color: var(--text-light); font-weight: 500;">
+      </p>
+      <button id="resend-button" style="display:block; margin-top: 10px;">Կրկին ուղարկել կոդը</button>
+      <p class="error-container"></p>
+      <p class="success-container"></p>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>&copy; 2025 AlgoLearn. Բոլոր իրավունքները պաշտպանված են:
+        <a href="#">Գաղտնիության Քաղաքականություն</a> |
+        <a href="feedback.html">Հետադարձ կապ</a>
+      </p>
+    </div>
+  </footer>
+
+  <script>
+    const BASE_URL = "https://localhost:7045";
+
+    document.addEventListener("DOMContentLoaded", function () {
+      const verifyButton = document.getElementById("verify-button");
+      const resendButton = document.getElementById("resend-button");
+      const emailInput = document.getElementById("verification-email");
+      const codeInput = document.getElementById("verification-code");
+      const errorContainer = document.querySelector(".error-container");
+      const successContainer = document.querySelector(".success-container");
+      const timerDisplay = document.getElementById("timer-display");
+
+      const storedEmail = localStorage.getItem("userEmail");
+      if (storedEmail) {
+        emailInput.value = storedEmail;
+      }
+
+      let countdown;
+
+      function startTimer() {
+        clearInterval(countdown);
+        let timeLeft = 120; // 2 minutes
+
+        resendButton.disabled = true; // Disable immediately after sending code
+        updateTimerDisplay(timeLeft);
+
+        countdown = setInterval(() => {
+          timeLeft--;
+          if (timeLeft <= 0) {
+            clearInterval(countdown);
+            verifyButton.disabled = true;
+            verifyButton.classList.remove("enabled");
+            resendButton.disabled = false; // Enable resend button after timer expires
+            resendButton.classList.add("enabled");
+            timerDisplay.textContent = "⏱️ Ժամկետը սպառվեց։ Կարող եք պահանջել նոր կոդ։";
+          } else {
+            updateTimerDisplay(timeLeft);
+          }
+        }, 1000);
+      }
+
+      function updateTimerDisplay(seconds) {
+        const min = Math.floor(seconds / 60).toString().padStart(2, '0');
+        const sec = (seconds % 60).toString().padStart(2, '0');
+        timerDisplay.textContent = `⏱️ ${min}:${sec} մնաց կոդի վավերացման համար`;
+      }
+
+      codeInput.addEventListener("input", function () {
+        const code = codeInput.value.trim();
+        const valid = code.length === 6 && /^\d{6}$/.test(code);
+
+        if (valid) {
+          verifyButton.disabled = false;
+          verifyButton.classList.add("enabled");
+        } else {
+          verifyButton.disabled = true;
+          verifyButton.classList.remove("enabled");
+        }
+      });
+
+      verifyButton.addEventListener("click", async function () {
+        const email = emailInput.value.trim();
+        const code = codeInput.value.trim();
+
+        if (!email || !code) {
+          return showError("Խնդրում ենք լրացնել բոլոր դաշտերը։");
+        }
+
+        verifyButton.disabled = true;
+
+        try {
+          const response = await fetch(`${BASE_URL}/api/auth/verify-code`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ email, code }),
+          });
+
+          const result = await response.json();
+
+          if (response.ok) {
+            showSuccess("✅ Էլ․ փոստը հաջողությամբ հաստատված է։");
+            clearInterval(countdown);
+            timerDisplay.style.display = "none";
+            setTimeout(() => {
+              window.location.href = "login.html";
+            }, 2000);
+          } else {
+            showError(result.message || "❌ Սխալ կոդ։");
+            verifyButton.disabled = false;
+            verifyButton.classList.remove("enabled");
+          }
+        } catch (err) {
+          showError("❌ Տեղի ունեցավ սխալ։");
+          verifyButton.disabled = false;
+          verifyButton.classList.remove("enabled");
+        }
+      });
+
+      resendButton.addEventListener("click", async function () {
+        const email = emailInput.value.trim();
+
+        if (!email) {
+          return showError("Խնդրում ենք մուտքագրել էլ․ փոստը։");
+        }
+
+        resendButton.disabled = true;
+        resendButton.classList.remove("enabled");
+        resendButton.textContent = "Ուղարկվում է...";
+
+        try {
+          const response = await fetch(`${BASE_URL}/api/auth/resend-code`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ email }),
+          });
+
+          const result = await response.json();
+
+          if (response.ok) {
+            showSuccess(result.message || "✅ Նոր կոդը ուղարկվել է։");
+            resendButton.textContent = "Կրկին ուղարկել կոդը";
+            startTimer(); // Restart timer after successful resend
+          } else {
+            showError(result.message || "❌ Չհաջողվեց ուղարկել նոր կոդ։");
+            resendButton.disabled = false;
+            resendButton.classList.add("enabled");
+            resendButton.textContent = "Կրկին ուղարկել կոդը";
+          }
+        } catch (err) {
+          showError("❌ Տեղի ունեցավ սխալ։");
+          resendButton.disabled = false;
+          resendButton.classList.add("enabled");
+          resendButton.textContent = "Կրկին ուղարկել կոդը";
+        }
+      });
+
+      function showError(message) {
+        errorContainer.textContent = message;
+        errorContainer.style.display = "block";
+        successContainer.style.display = "none";
+      }
+
+      function showSuccess(message) {
+        successContainer.textContent = message;
+        successContainer.style.display = "block";
+        errorContainer.style.display = "none";
+      }
+
+      // Always show the resend button but disable it initially
+      resendButton.style.display = "block";
+      resendButton.disabled = true;
+      resendButton.classList.remove("enabled");
+
+      // Start the timer immediately
+      startTimer();
+    });
+  </script>
+</body>
+
+</html>

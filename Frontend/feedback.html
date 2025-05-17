@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="hy">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Հետադարձ կապ | AlgoLearn</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: var(--primary);
+        }
+
+        main {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 60px 20px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, .08);
+            max-width: 600px;
+            width: 100%;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .card h2 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: var(--text);
+        }
+
+        .card p {
+            color: var(--text-light);
+            margin-bottom: 24px;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .required::after {
+            content: " *";
+            color: var(--danger);
+        }
+
+        input,
+        textarea {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: 16px;
+            transition: all 0.2s ease;
+        }
+
+        input:focus,
+        textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px var(--focus);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .input-feedback {
+            font-size: 14px;
+            margin-top: 6px;
+            color: var(--danger);
+            display: none;
+        }
+
+        .button-group {
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+            margin-top: 32px;
+        }
+
+        button {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        button[type="reset"] {
+            background: none;
+            border: 1px solid var(--border);
+            color: var(--text);
+        }
+
+        button[type="reset"]:hover {
+            background: var(--bg);
+        }
+
+        button[type="submit"] {
+            background: var(--primary);
+            color: white;
+            min-width: 120px;
+            position: relative;
+        }
+
+        button[type="submit"]:hover {
+            background: var(--primary-dark);
+        }
+
+        button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .loading-spinner {
+            display: none;
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 0.8s linear infinite;
+            position: absolute;
+            left: calc(50% - 10px);
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .notification {
+            margin-top: 24px;
+            padding: 16px;
+            border-radius: 8px;
+            display: none;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .notification.error {
+            background: var(--danger-light);
+            color: var(--danger);
+            border-left: 4px solid var(--danger);
+        }
+
+        .notification.success {
+            background: var(--success-light);
+            color: var(--success);
+            border-left: 4px solid var(--success);
+        }
+
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: block;
+            }
+
+            nav ul {
+                position: fixed;
+                top: 64px;
+                left: 0;
+                right: 0;
+                background: var(--card);
+                flex-direction: column;
+                gap: 0;
+                height: 0;
+                overflow: hidden;
+                transition: height 0.3s ease;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            }
+
+            nav ul.active {
+                height: auto;
+            }
+
+            nav ul li {
+                width: 100%;
+            }
+
+            nav ul a {
+                display: block;
+                padding: 16px;
+                width: 100%;
+                text-align: center;
+                border-bottom: 1px solid var(--border);
+            }
+
+            nav a::after {
+                display: none;
+            }
+
+            .card {
+                padding: 24px;
+            }
+
+            .button-group {
+                flex-direction: column;
+            }
+
+            button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <a href="home.html" class="logo">
+                    <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M15 3C8.373 3 3 8.373 3 15C3 21.627 8.373 27 15 27C21.627 27 27 21.627 27 15C27 8.373 21.627 3 15 3Z"
+                            stroke="#6e43bc" stroke-width="2" />
+                        <circle cx="10" cy="10" r="2" fill="#6e43bc" />
+                        <circle cx="20" cy="10" r="2" fill="#6e43bc" />
+                        <circle cx="15" cy="15" r="2" fill="#6e43bc" />
+                        <circle cx="10" cy="20" r="2" fill="#6e43bc" />
+                        <circle cx="20" cy="20" r="2" fill="#6e43bc" />
+                        <line x1="10" y1="10" x2="20" y2="10" stroke="#6e43bc" />
+                        <line x1="10" y1="10" x2="15" y2="15" stroke="#6e43bc" />
+                        <line x1="20" y1="10" x2="15" y2="15" stroke="#6e43bc" />
+                        <line x1="10" y1="20" x2="15" y2="15" stroke="#6e43bc" />
+                        <line x1="20" y1="20" x2="15" y2="15" stroke="#6e43bc" />
+                    </svg>
+                    AlgoLearn
+                </a>
+                <ul class="nav-links">
+                    <li><a href="dashboard.html" class="active" id="home">Գլխավոր</a></li>
+                    <li><a href="learn.html">Ուսուցում</a></li>
+                    <li><a href="profile.html">Անձնական էջ</a></li>
+                    <li><a href="about.html">Մեր մասին</a></li>
+                    <li id="logoutItem">
+                        <a href="#" id="logout">Ելք</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- ===== Feedback Form ===== -->
+    <main>
+        <section class="card">
+            <h2>Հետադարձ կապ</h2>
+            <p>Մենք գնահատում ենք ձեր կարծիքը և պատրաստ ենք օգնել ձեզ։</p>
+
+            <form id="fb-form">
+                <div class="form-group">
+                    <label for="name">Անուն</label>
+                    <input id="name" type="text" placeholder="Ձեր անունը" aria-describedby="nameHelp">
+                    <span id="nameHelp" class="input-feedback"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Էլ. փոստ</label>
+                    <input id="email" type="email" placeholder="name@example.com" aria-describedby="emailHelp">
+                    <span id="emailHelp" class="input-feedback"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="subject" class="required">Թեմա</label>
+                    <input id="subject" type="text" placeholder="Կարճ նկարագրություն" required
+                        aria-describedby="subjectHelp">
+                    <span id="subjectHelp" class="input-feedback"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="message" class="required">Հաղորդագրություն</label>
+                    <textarea id="message" rows="6" placeholder="Գրեք ձեր առաջարկը կամ խնդիրը" required
+                        aria-describedby="messageHelp"></textarea>
+                    <span id="messageHelp" class="input-feedback"></span>
+                </div>
+
+                <div class="button-group">
+                    <button type="reset" id="resetBtn">Մաքրել</button>
+                    <button type="submit" id="sendBtn">
+                        <span>Ուղարկել</span>
+                        <div class="loading-spinner" id="spinner"></div>
+                    </button>
+                </div>
+
+                <div id="success" class="notification success" role="alert"></div>
+                <div id="error" class="notification error" role="alert"></div>
+            </form>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 AlgoLearn. Բոլոր իրավունքները պաշտպանված են:
+                <a href="#">Գաղտնիության Քաղաքականություն</a> |
+                <a href="feedback.html">Հետադարձ կապ</a>
+            </p>
+        </div>
+    </footer>
+
+
+    <script>
+        /* =========================================================
+       feedback.js  –  Հետադարձ կապի էջի ամբողջական logic
+       ========================================================= */
+        const BASE_URL = "https://localhost:7045";       // ← փոխեք ըստ backend-ի
+        const USER_EMAIL_KEY = "algolearn_user_email";         // email պահելու բանալի
+        const USER_TOKEN_KEY = "algolearn_auth_token";         // auth token պահելու բանալի
+
+        /* ---------------- DOM ---------------- */
+        const form = document.getElementById("fb-form");
+        const sendBtn = document.getElementById("sendBtn");
+        const resetBtn = document.getElementById("resetBtn");
+        const spinner = document.getElementById("spinner");
+        const successBox = document.getElementById("success");
+        const errorBox = document.getElementById("error");
+        const menuToggle = document.getElementById("menuToggle");
+        const navMenu = document.getElementById("navMenu");
+        const logoutContainer = document.getElementById("logout-container");
+        const logoutButton = document.getElementById("logout");
+
+        /* ---------------- Form field meta ---------------- */
+        const fields = {
+            name: {
+                input: document.getElementById("name"),
+                feedback: document.getElementById("nameHelp")
+            },
+            email: {
+                input: document.getElementById("email"),
+                feedback: document.getElementById("emailHelp"),
+                pattern: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,})$/
+            },
+            subject: {
+                input: document.getElementById("subject"),
+                feedback: document.getElementById("subjectHelp"),
+                required: true
+            },
+            message: {
+                input: document.getElementById("message"),
+                feedback: document.getElementById("messageHelp"),
+                required: true,
+                minLength: 10
+            }
+        };
+
+        /* =========================================================
+           ⬤  INIT  –  էջի բացման պահ
+           ========================================================= */
+        document.addEventListener("DOMContentLoaded", () => {
+            toggleLogout();
+            prefillEmail();
+        });
+
+        /* =========================================================
+           ⬤  UI  –  Mobile menu / Logout
+           ========================================================= */
+        menuToggle?.addEventListener("click", () => {
+            navMenu?.classList.toggle("active");
+            menuToggle.textContent = navMenu?.classList.contains("active") ? "✕" : "☰";
+        });
+
+        logoutButton?.addEventListener("click", e => {
+            e.preventDefault();
+            localStorage.removeItem(USER_TOKEN_KEY);  // Clear auth
+            window.location.href = "login.html";
+        });
+
+        function toggleLogout() {
+            // ① ստուգում ենք՝ կա՞ userEmail localStorage-ում
+            const hasEmail = !!localStorage.getItem("userEmail");   // ← ձեր իրական բանալին
+
+            // ② վերցնում ենք ամբողջ <li id="logoutItem"> տարրը
+            const logoutItem = document.getElementById("logoutItem");
+
+            // ③ ցուցադրում / թաքցնում
+            if (logoutItem) {
+                logoutItem.style.display = hasEmail ? "block" : "none";
+            }
+        }
+
+        /* =========================================================
+           ⬤  Prefill email from localStorage
+           ========================================================= */
+        function prefillEmail() {
+            const saved = localStorage.getItem(USER_EMAIL_KEY);
+            if (!saved) return;
+
+            const inp = fields.email.input;
+            const help = fields.email.feedback;
+
+            inp.value = saved;
+            inp.readOnly = true;
+            inp.required = false;
+
+            help.textContent = "Էլ․-փոստը վերցվել է ձեր պրոֆիլից";
+            help.style.display = "block";
+            help.style.color = "var(--text-light)";
+        }
+
+        /* =========================================================
+           ⬤  Live validation wiring
+           ========================================================= */
+        Object.keys(fields).forEach(name => {
+            const el = fields[name].input;
+            el?.addEventListener("input", () => validateField(name));
+            el?.addEventListener("blur", () => validateField(name));
+        });
+
+        /* =========================================================
+           ⬤  Reset button
+           ========================================================= */
+        resetBtn?.addEventListener("click", () => {
+            Object.keys(fields).forEach(n => n !== "email" && showFieldFeedback(n, ""));
+            hideNotifications();
+        });
+
+        /* =========================================================
+           ⬤  Submit
+           ========================================================= */
+        form?.addEventListener("submit", async e => {
+            e.preventDefault();
+            hideNotifications();
+
+            if (!validateAllFields()) return;
+
+            const payload = {
+                name: fields.name.input.value.trim(),
+                email: fields.email.input.value.trim(),
+                subject: fields.subject.input.value.trim(),
+                message: fields.message.input.value.trim()
+            };
+
+            // Save e-mail only if user entered it manually this time
+            if (!fields.email.input.readOnly && payload.email) {
+                try { localStorage.setItem(USER_EMAIL_KEY, payload.email); }
+                catch (err) { console.error("localStorage save:", err); }
+            }
+
+            /* ---- Prepare headers (add token if any) ---- */
+            const headers = { "Content-Type": "application/json" };
+            const token = localStorage.getItem(USER_TOKEN_KEY);
+            if (token) headers.Authorization = `Bearer ${token}`;
+
+            setLoading(true);
+
+            try {
+                const res = await fetch(`${BASE_URL}/api/Feedback`, {
+                    method: "POST",
+                    headers,
+                    body: JSON.stringify(payload)
+                });
+                const data = await res.json();
+
+                if (res.ok) {
+                    showNotification(successBox, data.message || "Շնորհակալություն, ձեր հաղորդագրությունը հաջողությամբ ուղարկվեց։");
+                    form.reset();
+                } else {
+                    showNotification(errorBox, data.message || "Առաջացավ խնդիր, փորձեք ավելի ուշ։");
+                }
+            } catch (ex) {
+                console.error("Network error:", ex);
+                showNotification(errorBox, "Ցանցային սխալ, խնդրում ենք փորձել կրկին։");
+            } finally {
+                setLoading(false);
+            }
+        });
+
+        /* =========================================================
+           ⬤  Validation helpers
+           ========================================================= */
+        function validateField(name) {
+            const f = fields[name];
+            const v = f.input.value.trim();
+            let err = "";
+
+            if (f.required && v === "") {
+                err = "Այս դաշտը պարտադիր է";
+            } else if (name === "email" && v !== "" && !f.pattern.test(v)) {
+                err = "Խնդրում ենք մուտքագրել վավեր էլ․ փոստ";
+            } else if (f.minLength && v.length < f.minLength) {
+                err = `Նվազագույնը ${f.minLength} նիշ է պահանջվում`;
+            }
+
+            showFieldFeedback(name, err);
+            return err === "";
+        }
+
+        function validateAllFields() {
+            return Object.keys(fields).every(validateField);
+        }
+
+        function showFieldFeedback(name, msg) {
+            const f = fields[name];
+            if (!f.feedback) return;
+
+            f.feedback.textContent = msg;
+            f.feedback.style.display = msg ? "block" : "none";
+            f.input.toggleAttribute("aria-invalid", !!msg);
+            f.input.classList.toggle("error", !!msg);
+        }
+
+        /* =========================================================
+           ⬤  UI helpers (notifications & loading)
+           ========================================================= */
+        function hideNotifications() {
+            successBox && (successBox.style.display = "none");
+            errorBox && (errorBox.style.display = "none");
+        }
+
+        function showNotification(box, msg) {
+            hideNotifications();
+            if (!box) return;
+            box.textContent = msg;
+            box.style.display = "block";
+            setTimeout(() => box.scrollIntoView({ behavior: "smooth", block: "nearest" }), 100);
+        }
+
+        function setLoading(state) {
+            sendBtn && (sendBtn.disabled = state);
+            resetBtn && (resetBtn.disabled = state);
+            if (spinner) spinner.style.display = state ? "block" : "none";
+            sendBtn?.querySelector("span")?.style.setProperty("visibility", state ? "hidden" : "visible");
+        }
+
+    </script>
+</body>
+
+</html>

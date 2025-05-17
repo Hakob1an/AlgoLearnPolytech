@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="hy">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Արագ սորտավորման ալգորիթմ | AlgoLearn</title>
+    <link rel="stylesheet" href="../../styles.css">
+    <style>
+        main {
+            max-width: 1000px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        h1,
+        h2,
+        h3 {
+            margin-top: 1.8rem;
+            margin-bottom: 1.2rem;
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        h1 {
+            font-size: 2.2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        h2 {
+            font-size: 1.6rem;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 0.5rem;
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            margin-top: 1.5rem;
+        }
+
+        p {
+            margin-bottom: 1.5rem;
+            line-height: 1.7;
+            color: #444;
+        }
+
+        code {
+            background-color: #f0f0f0;
+            padding: 0.2rem 0.4rem;
+            border-radius: 3px;
+            font-family: monospace;
+            font-size: 0.9em;
+            color: #d14;
+        }
+
+        pre {
+            background-color: #f8f8f8;
+            padding: 1.2rem;
+            border-radius: var(--border-radius);
+            overflow-x: auto;
+            margin: 1.5rem 0 2rem;
+            border: 1px solid #eaeaea;
+        }
+
+        pre code {
+            background-color: transparent;
+            padding: 0;
+            color: #333;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        .content-block {
+            background-color: white;
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            margin: 2rem 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .visualization-container {
+            background-color: var(--card-bg);
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            box-shadow: 0 3px 15px rgba(0, 0, 0, 0.1);
+            margin: 2.5rem 0;
+        }
+
+        .user-input {
+            margin-bottom: 1.8rem;
+        }
+
+        .user-input label {
+            display: block;
+            margin-bottom: 0.7rem;
+            font-weight: 500;
+        }
+
+        input[type="text"] {
+            padding: 0.8rem 1rem;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            width: 65%;
+            margin-right: 1rem;
+            font-size: 1rem;
+        }
+
+        button {
+            background-color: var(--primary);
+            color: white;
+            padding: 0.8rem 1.8rem;
+            border: none;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            transition: background-color 0.3s;
+            font-weight: 500;
+        }
+
+        button:hover {
+            background-color: var(--primary-light);
+        }
+
+        .quiz-btn {
+            display: block;
+            margin: 3rem auto;
+            padding: 1rem 2.5rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        #visualization {
+            height: 300px;
+            background-color: #f9f9f9;
+            border-radius: var(--border-radius);
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            padding: 1rem;
+            border: 1px dashed #ddd;
+        }
+
+        .highlight-box {
+            background-color: #f7f2ff;
+            border-left: 4px solid var(--primary);
+            padding: 1.2rem;
+            margin: 1.5rem 0;
+            border-radius: 0 var(--border-radius) var(--border-radius) 0;
+        }
+
+        .step-list li {
+            position: relative;
+            padding-left: 0.5rem;
+        }
+
+        .code-result {
+            font-family: monospace;
+            background-color: #f5f5f5;
+            padding: 0.5rem 1rem;
+            border-radius: var(--border-radius);
+            margin: 0.3rem 0;
+            display: inline-block;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            input[type="text"] {
+                width: 100%;
+                margin-bottom: 1rem;
+            }
+
+            nav {
+                flex-direction: column;
+                gap: 16px;
+            }
+
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <a href="../../home.html" class="logo">
+                    <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M15 3C8.373 3 3 8.373 3 15C3 21.627 8.373 27 15 27C21.627 27 27 21.627 27 15C27 8.373 21.627 3 15 3Z"
+                            stroke="#6e43bc" stroke-width="2" />
+                        <circle cx="10" cy="10" r="2" fill="#6e43bc" />
+                        <circle cx="20" cy="10" r="2" fill="#6e43bc" />
+                        <circle cx="15" cy="15" r="2" fill="#6e43bc" />
+                        <circle cx="10" cy="20" r="2" fill="#6e43bc" />
+                        <circle cx="20" cy="20" r="2" fill="#6e43bc" />
+                        <line x1="10" y1="10" x2="20" y2="10" stroke="#6e43bc" />
+                        <line x1="10" y1="10" x2="15" y2="15" stroke="#6e43bc" />
+                        <line x1="20" y1="10" x2="15" y2="15" stroke="#6e43bc" />
+                        <line x1="10" y1="20" x2="15" y2="15" stroke="#6e43bc" />
+                        <line x1="20" y1="20" x2="15" y2="15" stroke="#6e43bc" />
+                    </svg>
+                    AlgoLearn
+                </a>
+                <ul class="nav-links">
+                    <li><a href="../../dashboard.html" id="home">Գլխավոր</a></li>
+                    <li><a href="../../learn.html" class="active">Ուսուցում</a></li>
+                    <li id="profileItem"><a href="../../profile.html">Անձնական էջ</a></li>
+                    <li><a href="../../about.html">Մեր մասին</a></li>
+                    <li id="logoutItem">
+                        <a href="#" id="logout">Ելք</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <div class="content-block">
+            <h1>Արագ սորտավորում</h1>
+            <p>
+                Արագ սորտավորումը գործնականում համարվում է ամենաարդյունավետ սորտավորման ալգորիթմներից մեկը։ Այն հիմնված
+                է «բաժանիր
+                և տիրիր» (divide-and-conquer) ռազմավարության վրա, որի ընթացքում զանգվածը բաժանվում է ենթազանգվածների,
+                որոնք լուծվում են
+                ռեկուրսիվ կերպով։ Շատ դեպքերում Արագ սորտավորման ալգորիթմի միջին ժամանակային բարդությունը համեմատական է
+                <code>O(n log n)</code>-ին, ինչը
+                այն արագ է դարձնում մեծ տվյալների համար։
+            </p>
+
+            <div class="highlight-box">
+                <p style="margin-bottom: 0;">
+                    <strong>Գործելակերպ:</strong> Արագ սորտավորումը ընտրում է պիվոտ տարր (pivot element) և
+                    վերադասավորում է զանգվածն այնպես, որ պիվոտից փոքր բոլոր տարրերը հայտնվեն նրա մի կողմում, իսկ մեծ
+                    տարրերը՝ մյուս կողմում։ Այս գործընթացը կրկնվում է ռեկուրսիվ կերպով յուրաքանչյուր ենթազանգվածի համար։
+                </p>
+            </div>
+        </div>
+
+        <div class="content-block">
+            <h2>Ինչու՞ սովորել արագ սորտավորման ալգորիթմը</h2>
+            <p>
+                Արագ սորտավորման հիմնական անհրաժեշտությունն իր բարձր արդյունավետությունն է։ Միջինում այն աշխատում է O(n
+                log n)
+                ժամանակային բարդությամբ, ինչը զգալիորեն արագ է այնպիսի պարզ ալգորիթմներից, ինչպիսիք են Պղպջակային
+                սորտավորումը կամ
+                Ներդրմամբ սորտավորումը, հատկապես մեծ տվյալների դեպքում։ Թեև դրա ամենավատ ժամանակային բարդությունը O(n²)
+                է, ճիշտ պիվոտի ընտրության կամ
+                օպտիմիզացիաների, օրինակ՝ պատահականացված Քուիկ Սորտի դեպքում, այս իրավիճակը գործնականում հազվադեպ է
+                պատահում։
+            </p>
+            <p>
+                Արագ սորտավորումը աշխատում է տեղում (in-place), այսինքն՝ զանգվածը սորտավորելու համար չի պահանջում
+                լրացուցիչ
+                հիշողություն։ Սա նրան առավելություն է տալիս Միաձուլման սորտավորման նկատմամբ, որը հավելյալ տարածք է
+                օգտագործում սորտավորված
+                ենթազանգվածները միավորելու համար։ Հետևաբար, Քուիկ Սորտը ավելի քիչ հիշողություն է օգտագործում և սովորաբար
+                ավելի հարմար է սահմանափակ
+                ռեսուրսներով համակարգերի համար։
+            </p>
+        </div>
+
+        <div class="content-block">
+            <h2>Ինչպե՞ս է աշխատում արագ սորտավորումը</h2>
+            <p>
+                Արագ սորտավորումը աշխատանքի հիմնական սկզբունքն է՝ ընտրել <em>պիվոտ տարր</em> (pivot element) և
+                վերադասավորել (կամ
+                բաժանել) զանգվածն այնպես, որ՝
+            </p>
+            <ul>
+                <li>Պիվոտից փոքր բոլոր տարրերը հայտնվեն նրա մի կողմում (սովորաբար ձախ)։</li>
+                <li>Պիվոտից մեծ բոլոր տարրերը հայտնվեն նրա մյուս կողմում (սովորաբար աջ)։</li>
+                <li>Այս գործընթացը կրկնվում է ռեկուրսիվ կերպով, մինչև ամբողջ զանգվածը լիովին դասավորվի։</li>
+            </ul>
+            <p>
+                Պիվոտի ճիշտ ընտրության և վերադասավորման քայլերի շնորհիվ՝ Արագ սորտավորումը յուրաքանչյուր ռեկուրսիվ
+                մակարդակում
+                արդյունավետորեն նվազեցնում է խնդրի չափը, ձգտելով զանգվածը հավասարակշռված ձևով բաժանել։
+            </p>
+
+            <h2>Կոդային օրինակ</h2>
+            <pre><code>function quickSort(array, low, high):
+    if low < high:
+        pivotIndex = partition(array, low, high)
+        quickSort(array, low, pivotIndex - 1)
+        quickSort(array, pivotIndex + 1, high)
+
+function partition(array, low, high):
+    pivot = array[high]
+    i = low - 1
+    for j from low to high - 1:
+        if array[j] < pivot:
+            i = i + 1
+            swap(array[i], array[j])
+    swap(array[i + 1], array[high])
+    return i + 1</code></pre>
+            <p>
+                Այս կոդում մենք առաջին հերթին որոշում ենք, արդյոք զանգվածը ունի մեկից ավելի տարրեր ("low &lt; high"
+                պայմանը)։ Եթե այո, ապա մենք բաժանում ենք այն՝ օգտագործելով "partition" ֆունկցիան, որը վերադարձնում է
+                պիվոտի դիրքը։ Այնուհետև մենք ռեկուրսիվ կերպով կիրառում ենք quickSort ալգորիթմը ձախ և աջ ենթազանգվածների
+                վրա։
+            </p>
+        </div>
+
+        <div class="content-block">
+            <h2>Թվային օրինակ</h2>
+            <p>
+                Դիտարկենք հետևյալ զանգվածը՝ <code>[8, 3, 1, 7, 4, 6, 2]</code>։ Այն կսորտավորենք արագ սորտավորման
+                միջոցով հետևյալ
+                կերպ․
+            </p>
+            <div class="highlight-box" style="text-align: center; font-size: 1.3rem; font-weight: bold;">
+                [8, 3, 1, 7, 4, 6, 2]
+            </div>
+
+            <h3>Քայլ 1՝ Պիվոտի ընտրություն</h3>
+            <p>
+                Ընտրում ենք վերջին տարրը՝ <code>2</code>-ը որպես պիվոտ (կան նաև այլ մեթոդներ՝ օրինակ, առաջին տարրը,
+                պատահական տարր
+                կամ երեք տարրերի միջին արժեքը)։
+            </p>
+
+            <h3>Քայլ 2՝ Զանգվածի բաժանում (Partition)</h3>
+            <ul class="step-list">
+                <li>Վերցնում ենք <code>2</code>-ը որպես պիվոտ։</li>
+                <li>Անցնում ենք զանգվածի միջով և բոլոր տարրերը, որոնք փոքր են <code>2</code>-ից, տեղափոխում ենք ձախ
+                    կողմ։</li>
+                <li>Տեղափոխում ենք պիվոտը (<code>2</code>) իր վերջնական դիրքին՝ փոքր տարրերից հետո և մեծ տարրերից առաջ։
+                </li>
+            </ul>
+            <span class="code-result">[1] [2] [8, 3, 7, 4, 6]</span>
+
+            <h3>Քայլ 3՝ Ենթազանգվածների ռեկուրսիվ սորտավորում</h3>
+            <p>
+                Այժմ առանձին-առանձին կիրառում ենք արագ սորտավորումը պիվոտից ձախ գտնվող ենթազանգվածին (<code>[1]</code>)
+                և աջ գտնվող ենթազանգվածին
+                (<code>[8, 3, 7, 4, 6]</code>)։
+            </p>
+
+            <p>
+                Քանի որ ձախ ենթազանգվածը (<code>[1]</code>) պարունակում է մեկ տարր, այն արդեն դասավորված է։
+            </p>
+
+            <p>
+                Աջ ենթազանգվածի (<code>[8, 3, 7, 4, 6]</code>) համար ընտրում ենք վերջին տարրը՝ <code>6</code>-ը որպես
+                նոր պիվոտ և կրկնում ենք պրոցեսը։
+            </p>
+
+            <span class="code-result">[1] [2] [3, 4] [6] [8, 7]</span>
+
+            <p>
+                Շարունակելով այս գործընթացը, բոլոր ենթազանգվածները կդասավորվեն, և արդյունքում կստանանք՝
+            </p>
+
+            <span class="code-result">[1, 2, 3, 4, 6, 7, 8]</span>
+
+            <div class="highlight-box">
+                <p style="margin-bottom: 0;">
+                    <strong>Արդյունք:</strong> Զանգվածը լիովին դասավորված է։ Արագ սորտավորումը բաժանել է խնդիրը փոքր
+                    ենթազանգվածների և աստիճանաբար միավորել դրանք՝ ստանալով վերջնական սորտավորված արդյունքը։
+                </p>
+            </div>
+        </div>
+
+        <div class="content-block">
+            <h2>Ժամանակային և հիշողության բարդություն</h2>
+            <ul>
+                <li><strong>Լավագույն և միջին դեպք՝</strong> <code>O(n log n)</code>, երբ պիվոտը բաժանում է զանգվածը
+                    մոտավորապես հավասար մասերի։</li>
+                <li><strong>Ամենավատ դեպք՝</strong> <code>O(n²)</code>, երբ պիվոտը միշտ հանգեցնում է խիստ անհավասարակշիռ
+                    բաժանումների (օրինակ՝ արդեն դասավորված զանգված)։</li>
+                <li><strong>Հիշողության բարդություն՝</strong> <code>O(log n)</code> ռեկուրսիայի համար (ավելի հազվադեպ՝
+                    <code>O(n)</code> ամենավատ դեպքում)։
+                </li>
+            </ul>
+
+            <h2>Առավելություններ</h2>
+            <ul>
+                <li><strong>Արագություն՝</strong> հիմնականում աշխատում է <code>O(n log n)</code> միջին ժամանակային
+                    բարդությամբ, ինչը արդյունավետ է մեծ տվյալների համար։</li>
+                <li><strong>Տեղում դասավորում՝</strong> պահանջում է շատ քիչ հավելյալ հիշողություն, քանի որ աշխատում է
+                    հիմնականում տեղում։</li>
+                <li><strong>Կեշ օպտիմալ՝</strong> լավ աշխատում է ժամանակակից համակարգերի հիշողության հիերարխիայի հետ։
+                </li>
+                <li><strong>Լայն կիրառություն՝</strong> շատ ծրագրավորման լեզուներում ստանդարտ սորտավորման ալգորիթմների
+                    հիմքում է։</li>
+            </ul>
+
+            <h2>Թերություններ</h2>
+            <ul>
+                <li><strong>Ոչ կայուն՝</strong> միևնույն արժեքով տարրերը կարող են փոխել իրենց հարաբերական
+                    դասավորությունը։</li>
+                <li><strong>Վատագույն դեպքի բարդություն՝</strong> որոշ դեպքերում կարող է հանգեցնել <code>O(n²)</code>
+                    բարդության, որը շատ դանդաղ է մեծ տվյալների համար։</li>
+                <li><strong>Մասնագիտացված տարբերակներ՝</strong> գործնական կիրառություններում հաճախ օգտագործվում են արագ
+                    սորտավորման բազմաթիվ օպտիմիզացված տարբերակներ, ինչը բարդացնում է ալգորիթմի իրականացումը։</li>
+            </ul>
+
+            <div class="highlight-box">
+                <p style="margin-bottom: 0;">
+                    <strong>Կիրառություններ:</strong> Արագ սորտավորումը լայնորեն օգտագործվում է տվյալների բազաներում,
+                    համակարգային գրադարաններում և բազմաթիվ ծրագրային հավելվածներում։ Այն հատկապես օգտակար է մեծ
+                    տվյալների հավաքածուների համար, որտեղ արդյունավետությունը կարևոր է։ Շատ գրադարանային իրականացումներ,
+                    ինչպիսիք են C++ STL-ի <code>std::sort</code> և Java-ի <code>Arrays.sort</code>, օգտագործում են արագ
+                    սորտավորումը կամ դրա ընդլայնված տարբերակները։
+                </p>
+            </div>
+        </div>
+
+        <div class="visualization-container">
+            <h2 style="margin-top: 0;">Ինտերակտիվ Վիզուալիզացիա</h2>
+            <div class="user-input">
+                <label for="numbers">Մուտքագրեք թվերը (ստորակետով առանձնացված):</label>
+                <input type="text" id="numbers" placeholder="օրինակ՝ 15, 10, 25, 30">
+                <button id="startSortingButton">Սկսել սորտավորումը</button>
+            </div>
+            <div id="visualization"></div>
+        </div>
+
+        <button id="startQuiz" class="quiz-btn">Սկսել թեստը</button>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 AlgoLearn. Բոլոր իրավունքները պաշտպանված են: <a href="#">Գաղտնիության Քաղաքականություն</a> | <a
+                href="#">Հետադարձ կապ</a></p>
+    </footer>
+    <script src="quicksort.js"></script>
+    <script src="../../main.js"></script>
+</body>
+
+</html>

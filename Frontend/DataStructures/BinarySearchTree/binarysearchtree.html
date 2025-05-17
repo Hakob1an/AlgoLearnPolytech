@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="hy">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Բինար որոնման ծառ | AlgoLearn</title>
+    <link rel="stylesheet" href="../../styles.css">
+    <style>
+        main {
+            max-width: 1000px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        h1,
+        h2,
+        h3 {
+            margin-top: 1.8rem;
+            margin-bottom: 1.2rem;
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        h1 {
+            font-size: 2.2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        h2 {
+            font-size: 1.6rem;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 0.5rem;
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            margin-top: 1.5rem;
+        }
+
+        p {
+            margin-bottom: 1.5rem;
+            line-height: 1.7;
+            color: #444;
+        }
+
+        code {
+            background-color: #f0f0f0;
+            padding: 0.2rem 0.4rem;
+            border-radius: 3px;
+            font-family: monospace;
+            font-size: 0.9em;
+            color: #d14;
+        }
+
+        pre {
+            background-color: #f8f8f8;
+            padding: 1.2rem;
+            border-radius: var(--border-radius);
+            overflow-x: auto;
+            margin: 1.5rem 0 2rem;
+            border: 1px solid #eaeaea;
+        }
+
+        pre code {
+            background-color: transparent;
+            padding: 0;
+            color: #333;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        .content-block {
+            background-color: white;
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            margin: 2rem 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .visualization-container {
+            background-color: var(--card-bg);
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            box-shadow: 0 3px 15px rgba(0, 0, 0, 0.1);
+            margin: 2.5rem 0;
+        }
+
+        .user-input {
+            margin-bottom: 1.8rem;
+        }
+
+        .user-input label {
+            display: block;
+            margin-bottom: 0.7rem;
+            font-weight: 500;
+        }
+
+        input[type="text"],
+        input[type="number"] {
+            padding: 0.8rem 1rem;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            width: 65%;
+            margin-right: 1rem;
+            font-size: 1rem;
+        }
+
+        button {
+            background-color: var(--primary);
+            color: white;
+            padding: 0.8rem 1.8rem;
+            border: none;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            transition: background-color 0.3s;
+            font-weight: 500;
+        }
+
+        button:hover {
+            background-color: var(--primary-light);
+        }
+
+        .quiz-btn {
+            display: block;
+            margin: 3rem auto;
+            padding: 1rem 2.5rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        #visualization {
+            height: 300px;
+            background-color: #f9f9f9;
+            border-radius: var(--border-radius);
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            padding: 1rem;
+            border: 1px dashed #ddd;
+        }
+
+        .highlight-box {
+            background-color: #f7f2ff;
+            border-left: 4px solid var(--primary);
+            padding: 1.2rem;
+            margin: 1.5rem 0;
+            border-radius: 0 var(--border-radius) var(--border-radius) 0;
+        }
+
+        .step-list li {
+            position: relative;
+            padding-left: 0.5rem;
+        }
+
+        .code-result {
+            font-family: monospace;
+            background-color: #f5f5f5;
+            padding: 0.5rem 1rem;
+            border-radius: var(--border-radius);
+            margin: 0.3rem 0;
+            display: inline-block;
+        }
+
+        /* BST Node Styling */
+        .bst-node {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: #7248c7;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            z-index: 10;
+            font-size: 16px;
+        }
+
+        /* Animation states for nodes */
+        .bst-node.searching {
+            background-color: #ffcc00;
+            transform: scale(1.1);
+            box-shadow: 0 0 8px rgba(255, 204, 0, 0.7);
+        }
+
+        .bst-node.found {
+            background-color: #4caf50;
+            transform: scale(1.1);
+            box-shadow: 0 0 8px rgba(76, 175, 80, 0.7);
+        }
+
+        .bst-node.deleted {
+            background-color: #f34549;
+            transform: scale(1.1);
+            box-shadow: 0 0 8px rgba(243, 69, 73, 0.7);
+        }
+
+        /* BST Visualization container */
+        #visualization {
+            height: 400px;
+            background-color: white;
+            border-radius: var(--border-radius);
+            position: relative;
+            margin-top: 20px;
+            border: 1px solid #eaeaea;
+            overflow: visible;
+        }
+
+        /* Line animation */
+        .bst-arrow {
+            position: absolute;
+            transition: all 0.3s ease;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+
+            input[type="text"],
+            input[type="number"] {
+                width: 100%;
+                margin-bottom: 1rem;
+            }
+
+            nav {
+                flex-direction: column;
+                gap: 16px;
+            }
+
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <a href="../../home.html" class="logo">
+                    <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M15 3C8.373 3 3 8.373 3 15C3 21.627 8.373 27 15 27C21.627 27 27 21.627 27 15C27 8.373 21.627 3 15 3Z"
+                            stroke="#6e43bc" stroke-width="2" />
+                        <circle cx="10" cy="10" r="2" fill="#6e43bc" />
+                        <circle cx="20" cy="10" r="2" fill="#6e43bc" />
+                        <circle cx="15" cy="15" r="2" fill="#6e43bc" />
+                        <circle cx="10" cy="20" r="2" fill="#6e43bc" />
+                        <circle cx="20" cy="20" r="2" fill="#6e43bc" />
+                        <line x1="10" y1="10" x2="20" y2="10" stroke="#6e43bc" />
+                        <line x1="10" y1="10" x2="15" y2="15" stroke="#6e43bc" />
+                        <line x1="20" y1="10" x2="15" y2="15" stroke="#6e43bc" />
+                        <line x1="10" y1="20" x2="15" y2="15" stroke="#6e43bc" />
+                        <line x1="20" y1="20" x2="15" y2="15" stroke="#6e43bc" />
+                    </svg>
+                    AlgoLearn
+                </a>
+                <ul class="nav-links">
+                    <li><a href="../../dashboard.html" id="home">Գլխավոր</a></li>
+                    <li><a href="../../learn.html" class="active">Ուսուցում</a></li>
+                    <li id="profileItem"><a href="../../profile.html">Անձնական էջ</a></li>
+                    <li><a href="../../about.html">Մեր մասին</a></li>
+                    <li id="logoutItem">
+                        <a href="#" id="logout">Ելք</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <div class="content-block">
+            <h1>Բինար որոնման ծառ (BST)</h1>
+            <p>
+                <strong>Բինար որոնման ծառը (Binary Search Tree, BST)</strong> հիմնարար տվյալների կառուցվածք է, որն
+                ապահովում
+                է տվյալների արդյունավետ պահպանում, որոնում և կառավարում դասավորված վիճակում։ Այն ունի լավ միջին
+                արդյունավետություն
+                տարրերի ներդրման, որոնման և հեռացման համար, եթե ծառը հավասարակշռված է, սակայն դրա արդյունավետությունը
+                կարող է նվազել, եթե ծառը
+                դառնա խիստ անհավասարակշռված։
+            </p>
+
+            <div class="highlight-box">
+                <p style="margin-bottom: 0;">
+                    <strong>Հիմնական սկզբունք:</strong> Բինար որոնման ծառի յուրաքանչյուր հանգույցում ձախ ենթածառի բոլոր
+                    բանալիները փոքր են տվյալ հանգույցի բանալուց, իսկ աջ ենթածառի բոլոր բանալիները մեծ են դրանից։
+                </p>
+            </div>
+        </div>
+
+        <div class="content-block">
+            <h2>Հիմնական սկզբունքները</h2>
+            <p>
+                Բինար որոնման ծառի յուրաքանչյուր հանգույց պարունակում է՝
+            </p>
+            <ul>
+                <li><strong>Բանալի (կամ տվյալ)․</strong> Հանգույցում պահվող հիմնական արժեքը։</li>
+                <li><strong>Ձախ զավակ․</strong> Ցուցիչ (կամ հղում) դեպի ձախ ենթածառը։</li>
+                <li><strong>Աջ զավակ․</strong> Ցուցիչ (կամ հղում) դեպի աջ ենթածառը։</li>
+            </ul>
+            <p>
+                BST-ի կարևորագույն <strong>անփոփոխ պայմանն</strong> այն է, որ՝
+            </p>
+            <ul>
+                <li>Ցանկացած հանգույցի ձախ ենթածառի բոլոր բանալիները խստորեն փոքր են տվյալ հանգույցի բանալուց։</li>
+                <li>Ցանկացած հանգույցի աջ ենթածառի բոլոր բանալիները խստորեն մեծ են տվյալ հանգույցի բանալուց։</li>
+            </ul>
+            <p>
+                Այս կանոնների շնորհիվ, ցանկացած արժեք, որն ավելի փոքր է տվյալ հանգույցի բանալուց, տեղավորվում է ձախ
+                կողմում,
+                իսկ ավելի մեծ արժեքները՝ աջ կողմում։ Այս հստակ և հետևողական կառուցվածքը թույլ է տալիս արդյունավետորեն
+                իրականացնել որոնման, ներդրման և հեռացման գործողությունները։
+            </p>
+        </div>
+
+        <div class="content-block">
+            <h2>Ինչու՞ օգտագործել Բինար որոնման ծառ (BST)</h2>
+            <p>
+                BST-ները շատ տարածված են այն դեպքերում, երբ անհրաժեշտ է տարրերի <em>դինամիկ բազմությունը</em> պահպանել
+                դասավորված վիճակում և հաճախակի իրականացնել արագ որոնումներ։ Դրանց հիմնական կիրառությունները ներառում են՝
+            </p>
+            <ul>
+                <li><strong>Դասավորված ցանկի պահպանում․</strong> Տարրի ներդրումը BST-ի մեջ կարող է լինել ավելի
+                    արդյունավետ,
+                    քան դասավորված զանգվածի դեպքում, քանի որ զանգվածներում ներդրումը կարող է պահանջել բազմաթիվ տարրերի
+                    տեղափոխում։</li>
+                <li><strong>Բառարանների կամ քարտեզների իրականացում․</strong> Բանալիները և դրանց կից տվյալները կարող են
+                    պահվել BST-ում (կամ հավասարակշռված տարբերակներում, ինչպիսիք են AVL կամ Red-Black ծառերը)՝ ապահովելով
+                    արդյունավետ կատարողականություն։</li>
+                <li><strong>Տվյալների բազաներ կամ ֆայլային համակարգեր․</strong> BST-ի նման կառուցվածքները (հաճախ
+                    հավասարակշռված) կարող են կիրառվել որպես հիմք՝ մեծ ծավալի տվյալների ինդեքսավորման համար։</li>
+            </ul>
+        </div>
+
+        <div class="content-block">
+            <h2>Կառուցվածքի օրինակ</h2>
+            <pre>
+        15
+       /  \
+      10   20
+     / \    \
+    8  12   25
+            </pre>
+            <p>
+                Այս օրինակում ծառի արմատը (root) 15-ն է։ Արմատից ձախ գտնվող բոլոր բանալիները (10, 8, 12) փոքր են 15-ից,
+                իսկ
+                աջ կողմում գտնվող բոլոր բանալիները (20, 25) մեծ են 15-ից։ Այս օրինակը պարզ ցուցադրում է BST-ի հիմնական
+                կանոնը, ըստ որի ձախ ենթածառում պահվում են միայն ավելի փոքր արժեքները, իսկ աջ ենթածառում՝ միայն ավելի մեծ
+                արժեքները։
+            </p>
+        </div>
+
+        <div class="content-block">
+            <h2>Գործողություններ Բինար որոնման ծառի վրա</h2>
+            <p>
+                BST-ի հիմնական գործողություններն են՝ <strong>ավելացնելը (insertion)</strong>, <strong>որոնումը
+                    (search)</strong> և <strong>հեռացումը (deletion)</strong>։ Դրանցից յուրաքանչյուրն օգտագործում է
+                BST-ի
+                հիմնական կանոնը՝ ծառի ներսում արագ տեղաշարժվելու համար։
+            </p>
+
+            <h3>1. Տարրի ավելացում</h3>
+            <p>
+                Նոր բանալի ավելացնելիս այն համեմատում ենք ծառի արմատի (root-ի) հետ․
+            </p>
+            <ul>
+                <li>Եթե նոր բանալին ավելի փոքր է, շարժվում ենք դեպի ձախ ենթածառ (ռեկուրսիվ կամ իտերատիվ)։</li>
+                <li>Եթե նոր բանալին ավելի մեծ է, շարժվում ենք դեպի աջ ենթածառ (ռեկուրսիվ կամ իտերատիվ)։</li>
+                <li>Այս համեմատությունը կրկնում ենք յուրաքանչյուր հանգույցի մոտ, մինչև գտնենք համապատասխան ազատ դիրքը,
+                    որտեղ
+                    պետք է ավելացնենք նոր հանգույցը։</li>
+            </ul>
+
+            <pre><code>function BST_Insert(root, key):
+    if root == null:
+        return createNode(key)
+    if key < root.key:
+        root.left = BST_Insert(root.left, key)
+    else:
+        root.right = BST_Insert(root.right, key)
+    return root</code></pre>
+            <p>
+                Այս գործողությունը սովորաբար կատարվում է <strong>O(log n)</strong> ժամանակում, եթե ծառը հավասարակշռված
+                է,
+                քանի որ յուրաքանչյուր համեմատություն մեզ տեղափոխում է ծառի հաջորդ մակարդակը։ Սակայն, եթե ծառը խիստ
+                անհավասարակշռված է (skewed), ամենավատ դեպքում կատարողականությունը դառնում է <strong>O(n)</strong>։
+            </p>
+
+            <h3>2. Տարրի որոնում</h3>
+            <p>
+                Որոնման գործողությունն աշխատում է նույն տրամաբանությամբ․
+            </p>
+            <ul>
+                <li>Եթե որոնվող բանալին համընկնում է ընթացիկ հանգույցի բանալու հետ, որոնումն ավարտվում է։</li>
+                <li>Եթե որոնվող բանալին ավելի փոքր է, անցնում ենք դեպի ձախ զավակը։</li>
+                <li>Եթե որոնվող բանալին ավելի մեծ է, անցնում ենք դեպի աջ զավակը։</li>
+            </ul>
+            <p>
+                Այս գործընթացը շարունակվում է այնքան ժամանակ, մինչև գտնենք բանալին կամ հասնենք <code>null</code> հղման,
+                ինչը
+                նշանակում է, որ որոնվող բանալին բացակայում է ծառում։
+            </p>
+
+            <pre><code>function BST_Search(root, key):
+    if root == null or root.key == key:
+        return root
+    if key < root.key:
+        return BST_Search(root.left, key)
+    else:
+        return BST_Search(root.right, key)</code></pre>
+
+            <h3>3. Տարրի հեռացում</h3>
+            <p>
+                Հանգույցի հեռացումը BST-ից մի փոքր ավելի բարդ է։ Նախ պետք է գտնել այն հանգույցը, որը ցանկանում ենք
+                հեռացնել։
+                Գտնելուց հետո՝
+            </p>
+            <ul>
+                <li>Եթե հանգույցը տերև է (երեխա հանգույցներ չունի), այն կարող ենք ուղղակիորեն հեռացնել։</li>
+                <li>Եթե հանգույցն ունի միայն մեկ երեխա, հանգույցը փոխարինում ենք իր երեխա հանգույցով։</li>
+                <li>Եթե հանգույցն ունի երկու երեխա, հաճախ կիրառվող ռազմավարությունն այն է, որ հանգույցի արժեքը
+                    փոխարինում
+                    ենք իր աջ ենթածառի <em>ամենափոքր տարրի արժեքով</em>, իսկ հետո այդ նվազագույն տարրով հանգույցը
+                    հեռացնում
+                    ենք աջ ենթածառից։</li>
+            </ul>
+            <p>
+                Սա երաշխավորում է, որ BST-ի հիմնական կանոնը պահպանվի։
+            </p>
+
+            <pre><code>function BST_Delete(root, key):
+    if root == null:
+        return null
+    if key < root.key:
+        root.left = BST_Delete(root.left, key)
+    else if key > root.key:
+        root.right = BST_Delete(root.right, key)
+    else:
+        // Node to delete found
+        if root.left == null:
+            return root.right
+        else if root.right == null:
+            return root.left
+        // Node has two children
+        temp = findMin(root.right)
+        root.key = temp.key
+        root.right = BST_Delete(root.right, temp.key)
+    return root</code></pre>
+        </div>
+
+        <div class="content-block">
+            <h2>Բինար որոնման ծառի բարդությունը</h2>
+            <p>
+                BST-ում որոնման, ավելացման և հեռացման գործողությունների ժամանակային բարդությունը կախված է ծառի ձևից․
+            </p>
+            <ul>
+                <li><strong>Հավասարակշռված BST-ում․</strong> որոնումը, ավելացումը և հեռացումը կատարվում են
+                    <code>O(log n)</code> ժամանակում։
+                </li>
+                <li><strong>Անհավասարակշռված BST-ում (ամենավատ դեպք)․</strong> գործողությունները կատարվում են
+                    <code>O(n)</code> ժամանակում, քանի որ ծառը դառնում է նման կապակցված ցանկի։
+                </li>
+            </ul>
+            <p>
+                Ինքնահավասարակշռվող ծառերը (օրինակ՝ AVL, Red-Black ծառեր) մշտապես ապահովում են <code>O(log n)</code>
+                ժամանակային բարդություն՝ ամեն ավելացումից կամ հեռացումից հետո վերականգնելով ծառի հավասարակշռվածությունը։
+            </p>
+
+            <div class="highlight-box">
+                <p style="margin-bottom: 0;">
+                    <strong>Կիրառություններ:</strong> BST-ները կիրառվում են բազմաթիվ ոլորտներում՝ տվյալների բազաներից
+                    մինչև ֆայլային համակարգեր, արագ որոնում ապահովելու համար։ BST-ի վրա հիմնված ավելի ընդլայնված
+                    կառուցվածքները, ինչպիսիք են AVL ծառերը և Red-Black ծառերը, օգտագործվում են արդի շատ ծրագրերում։
+                </p>
+            </div>
+        </div>
+
+        <div class="visualization-container">
+            <h2 style="margin-top: 0;">Ինտերակտիվ Վիզուալիզացիա</h2>
+            <div class="user-input">
+                <label for="insertValue"><strong>Ավելացնել:</strong></label>
+                <input type="number" id="insertValue" placeholder="Մուտքագրեք թիվ">
+                <button id="btnInsert">Ավելացնել</button>
+            </div>
+            <div class="user-input">
+                <label for="deleteValue"><strong>Հեռացնել:</strong></label>
+                <input type="number" id="deleteValue" placeholder="Մուտքագրեք թիվ">
+                <button id="btnDelete">Հեռացնել</button>
+            </div>
+            <div class="user-input">
+                <label for="searchValue"><strong>Որոնել:</strong></label>
+                <input type="number" id="searchValue" placeholder="Մուտքագրեք թիվ">
+                <button id="btnSearch">Որոնել</button>
+            </div>
+            <div id="visualization"></div>
+        </div>
+
+        <button id="startQuiz" class="quiz-btn">Սկսել թեստը</button>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 AlgoLearn. Բոլոր իրավունքները պաշտպանված են: <a href="#">Գաղտնիության Քաղաքականություն</a> | <a
+                href="#">Հետադարձ կապ</a></p>
+    </footer>
+    <script src="binarysearchtree.js"></script>
+    <script src="../../main.js"></script>
+</body>
+
+</html>

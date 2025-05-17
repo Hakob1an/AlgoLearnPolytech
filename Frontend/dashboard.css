@@ -1,0 +1,420 @@
+main {
+  padding: 40px 0;
+}
+
+html, body {
+  height: 100%;
+}
+
+.dashboard {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+h1 {
+  font-size: 2.5rem;
+  margin-bottom: 32px;
+  color: var(--primary-dark);
+}
+
+h2 {
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+  color: var(--text);
+}
+
+.card {
+  background-color: var(--card-bg);
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  padding: 24px;
+  margin-bottom: 30px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+}
+
+.progress-section {
+  margin-bottom: 30px;
+  display: none;
+}
+
+.progress-bar-container {
+  margin-top: 16px;
+}
+
+.progress-bar {
+  height: 16px;
+  background-color: var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+  margin: 10px 0;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(to right, var(--primary), var(--accent));
+  border-radius: 8px;
+  width: 0;
+  transition: width 1s ease;
+}
+
+#progress-text {
+  text-align: right;
+  font-weight: 500;
+  color: var(--primary-dark);
+}
+
+.dashboard-columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+}
+
+.last-viewed-item-section,
+.suggestions-section {
+  height: 100%;
+  display: none;
+}
+
+#lastViewedItemLink {
+  display: inline-block;
+  padding: 14px 24px;
+  margin-top: 20px;
+  background-color: var(--primary);
+  color: white;
+  text-decoration: none;
+  border-radius: 8px;
+  font-weight: 500;
+  transition: background-color 0.2s ease;
+}
+
+#lastViewedItemLink:hover {
+  background-color: var(--primary-dark);
+}
+
+#suggestions-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 20px;
+}
+
+#suggestions-list li a {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px;
+  background-color: var(--secondary);
+  border-radius: 8px;
+  text-decoration: none;
+  color: var(--text);
+  font-weight: 500;
+  transition: background-color 0.2s ease;
+}
+
+#suggestions-list li a:hover {
+  background-color: rgba(99, 102, 241, 0.1);
+}
+
+.suggestion-icon {
+  font-size: 1.5rem;
+  color: var(--primary);
+}
+
+.friendly-message {
+  text-align: center;
+  padding: 60px 20px;
+  display: none;
+}
+
+#friendly-title {
+  font-size: 2rem;
+  margin-bottom: 16px;
+  color: var(--primary-dark);
+}
+
+#friendly-text {
+  font-size: 1.2rem;
+  max-width: 700px;
+  margin: 0 auto 32px auto;
+  color: var(--text-light);
+}
+
+#start-learning-btn {
+  display: inline-block;
+  padding: 16px 40px;
+  background-color: var(--primary);
+  color: white;
+  text-decoration: none;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 1.1rem;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+#start-learning-btn:hover {
+  background-color: var(--primary-dark);
+  transform: translateY(-3px);
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 768px) {
+  .dashboard-columns {
+    grid-template-columns: 1fr;
+  }
+
+  nav {
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .nav-links {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  h1 {
+    font-size: 2rem;
+    text-align: center;
+  }
+}
+
+/* Add these styles to your dashboard.css file */
+
+/* Improved difficulty indicators */
+.difficulty {
+  margin-left: auto;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  position: relative;
+  color: #fff;
+  min-width: 70px;
+  justify-content: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.difficulty::before {
+  content: "";
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: currentColor;
+}
+
+.difficulty.easy {
+  background-color: #4caf50; /* Green */
+  background-image: linear-gradient(135deg, #4caf50, #66bb6a);
+}
+
+.difficulty.medium {
+  background-color: #ffa000; /* Amber */
+  background-image: linear-gradient(135deg, #ffa000, #ffb74d);
+}
+
+.difficulty.hard {
+  background-color: #e53935; /* Red */
+  background-image: linear-gradient(135deg, #e53935, #ef5350);
+}
+
+/* Enhance suggestions list appearance */
+#suggestions-list li a {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px;
+  background-color: var(--secondary);
+  border-radius: 12px;
+  text-decoration: none;
+  color: var(--text);
+  font-weight: 500;
+  transition: all 0.2s ease;
+  position: relative;
+  border: 1px solid transparent;
+}
+
+#suggestions-list li a:hover {
+  background-color: rgba(99, 102, 241, 0.08);
+  border-color: var(--primary-light);
+  transform: translateY(-2px);
+}
+
+.suggestion-icon {
+  font-size: 1.5rem;
+  color: var(--primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background-color: rgba(110, 67, 188, 0.1);
+  border-radius: 8px;
+}
+
+#suggestions-list li a span:nth-child(2) {
+  flex-grow: 1;
+  font-weight: 600;
+  font-size: 1.05rem;
+}
+
+/* Add tooltip to difficulty indicators */
+.difficulty::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.2s ease;
+  pointer-events: none;
+  margin-bottom: 5px;
+}
+
+.difficulty:hover::after {
+  opacity: 1;
+  visibility: visible;
+}
+
+
+/* Styling fixes for consistent checkbox and item appearance */
+
+/* Reset and base styling for suggestions list */
+#suggestions-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 20px;
+  padding: 0;
+}
+
+/* Styling for list items - consistent size regardless of checked state */
+#suggestions-list li {
+  position: relative;
+  display: flex;
+  align-items: center;
+  border-radius: 12px;
+  transition: all 0.2s ease;
+  padding: 0;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+  overflow: hidden;
+}
+
+/* Styling for solved items - consistent size with unsolved */
+#suggestions-list li.solved {
+  background-color: rgba(110, 67, 188, 0.06);
+}
+
+/* Add strikethrough effect for solved problems */
+#suggestions-list li.solved .problem-name {
+  position: relative;
+}
+
+#suggestions-list li.solved .problem-name::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 100%;
+  height: 2px;
+  background-color: var(--primary);
+  opacity: 0.6;
+  transform-origin: center;
+  animation: strikethrough 0.3s ease-out forwards;
+}
+
+/* Improved checkbox positioning and styling */
+.problem-solved-checkbox {
+  position: absolute;
+  left: 16px;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  border-radius: 4px;
+  border: 2px solid var(--primary);
+  accent-color: var(--primary);
+  z-index: 3; /* Ensure it's above other elements */
+  opacity: 0.9;
+  transition: all 0.2s ease;
+}
+
+.problem-solved-checkbox:hover {
+  opacity: 1;
+  transform: scale(1.1);
+}
+
+/* Container layout adjustments for consistent sizing */
+#suggestions-list li a {
+  flex: 1;
+  padding: 16px 16px 16px 48px; /* Left padding to make room for checkbox */
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  color: var(--text);
+  min-height: 24px; /* Ensure minimum height */
+  width: 100%; /* Make sure link takes full width */
+}
+
+/* Ensure icon styling is consistent */
+.suggestion-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 32px; /* Minimum width to prevent shrinking */
+  height: 32px;
+  background-color: #6098e3;
+  border-radius: 8px;
+  color: white;
+  font-size: 16px;
+  margin-right: 12px; /* Consistent spacing */
+}
+
+/* Make the problem name consistent */
+.problem-name {
+  font-weight: 500;
+  flex-grow: 1; /* Allow it to take available space */
+  white-space: nowrap; /* Prevent wrapping */
+  overflow: hidden; /* Hide overflow */
+  text-overflow: ellipsis; /* Add ellipsis for long text */
+}
+
+/* Consistent difficulty badge styling */
+.difficulty {
+  margin-left: auto;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+  min-width: 70px;
+  text-align: center;
+  white-space: nowrap;
+}

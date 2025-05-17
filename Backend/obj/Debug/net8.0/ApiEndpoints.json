@@ -1,0 +1,283 @@
+[
+  {
+    "ContainingType": "AlgoLearnAPI.Controllers.AchievementController",
+    "Method": "GetUserAchievements",
+    "RelativePath": "api/achievements/{email}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "email",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "AlgoLearnAPI.Controllers.AchievementController",
+    "Method": "UnlockAchievement",
+    "RelativePath": "api/achievements/unlock",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "AlgoLearnAPI.Controllers.UnlockAchievementRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "AlgoLearnAPI.Controllers.AuthController",
+    "Method": "Login",
+    "RelativePath": "api/auth/login",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "AlgoLearnAPI.Controllers.LoginRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "AlgoLearnAPI.Controllers.AuthController",
+    "Method": "Register",
+    "RelativePath": "api/auth/register",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "AlgoLearnAPI.Controllers.RegisterRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "AlgoLearnAPI.Controllers.AuthController",
+    "Method": "VerifyCode",
+    "RelativePath": "api/auth/verify-code",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "AlgoLearnAPI.Controllers.VerifyCodeRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "AlgoLearnAPI.Controllers.DashboardController",
+    "Method": "GetDashboardData",
+    "RelativePath": "api/dashboard/{email}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "email",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "AlgoLearnAPI.Controllers.DashboardController",
+    "Method": "MarkTopicCompleted",
+    "RelativePath": "api/dashboard/complete",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "AlgoLearnAPI.DTOs.CompletionRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "AlgoLearnAPI.Controllers.DashboardController",
+    "Method": "GetCompletedTopics",
+    "RelativePath": "api/dashboard/completed/{email}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "email",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "AlgoLearnAPI.Controllers.DashboardController",
+    "Method": "GetLastViewedItem",
+    "RelativePath": "api/dashboard/getLastViewedItem/{email}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "email",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "AlgoLearnAPI.Controllers.DashboardController",
+    "Method": "SaveProgress",
+    "RelativePath": "api/dashboard/saveProgress",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "AlgoLearnAPI.Controllers.ProgressRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "AlgoLearnAPI.Controllers.DashboardController",
+    "Method": "GetProblemSuggestions",
+    "RelativePath": "api/dashboard/suggestions/{email}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "email",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "AlgoLearnAPI.Controllers.DashboardController",
+    "Method": "UpdateLastViewed",
+    "RelativePath": "api/dashboard/updateLastViewed",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "AlgoLearnAPI.Controllers.DashboardController\u002BLastViewedRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "AlgoLearnAPI.Controllers.LearningController",
+    "Method": "GetAlgorithms",
+    "RelativePath": "api/learning/algorithms",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "AlgoLearnAPI.Controllers.LearningController",
+    "Method": "GetDataStructures",
+    "RelativePath": "api/learning/datastructures",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "AlgoLearnAPI.Controllers.ProfileController",
+    "Method": "GetProfile",
+    "RelativePath": "api/profile/{email}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "email",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "AlgoLearnAPI.Controllers.ProfileController",
+    "Method": "UpdateProfile",
+    "RelativePath": "api/profile/{email}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "email",
+        "Type": "System.String",
+        "IsRequired": true
+      },
+      {
+        "Name": "model",
+        "Type": "AlgoLearnAPI.Services.UpdateProfileRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "AlgoLearnAPI.Controllers.SuggestionController",
+    "Method": "GetSuggestions",
+    "RelativePath": "api/suggestions/{topicName}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "topicName",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "AlgoLearnAPI.Controllers.SuggestionController",
+    "Method": "AddSuggestion",
+    "RelativePath": "api/suggestions/add",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "AlgoLearnAPI.Controllers.SuggestionRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  }
+]

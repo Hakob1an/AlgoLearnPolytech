@@ -1,0 +1,6 @@
+@AlgoLearnAPI_HostAddress = http://localhost:5287
+
+GET {{AlgoLearnAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

@@ -1,0 +1,96 @@
+/* ------------------ */
+/* User Input Section */
+/* ------------------ */
+.user-input {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    padding: 15px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.1);
+    width: fit-content;
+    margin: 10px auto 15px auto;
+}
+
+.user-input input {
+    padding: 12px;
+    font-size: 16px;
+    width: 200px;
+    border: 2px solid #6f42c1;
+    border-radius: 5px;
+    transition: 0.3s;
+    text-align: center;
+}
+
+.user-input input:focus {
+    outline: none;
+    border-color: #5f38a9;
+    box-shadow: 0px 0px 8px rgba(106, 0, 255, 0.5);
+}
+
+.user-input button {
+    padding: 12px 18px;
+    font-size: 16px;
+    font-weight: bold;
+    background-color: #6f42c1;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: 0.3s;
+    margin-left: 5px;
+}
+
+.user-input button:hover {
+    background-color: #5f38a9;
+}
+
+/* --------------------- */
+/* Visualization Section */
+/* --------------------- */
+.visualization-container {
+    text-align: center;
+    margin-top: 50px;
+    padding: 25px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#visualization {
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
+    justify-content: flex-start;
+    width: 200px;
+    min-height: 300px;
+    border: 3px solid #6f42c1;
+    background-color: white;
+    border-radius: 5px;
+    padding: 10px;
+    margin-top: 20px;
+    position: relative;
+}
+
+.stack-item {
+    width: 80%;
+    padding: 10px;
+    margin: 5px 0;
+    background-color: #6f42c1;
+    color: white;
+    text-align: center;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 5px;
+    transition: transform 0.3s ease-in-out;
+}
+
+.stack-item.pop-animation {
+    transform: translateY(-30px);
+    opacity: 0;
+}

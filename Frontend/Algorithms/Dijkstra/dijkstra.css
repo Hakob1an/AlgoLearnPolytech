@@ -1,0 +1,129 @@
+/* ------------------ */
+/* User Input Section */
+/* ------------------*/
+.user-input {
+    text-align: center;
+    margin-bottom: 20px;
+    width: 100%;
+}
+
+.user-input label {
+    font-size: 18px;
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.user-input input {
+    padding: 10px;
+    font-size: 16px;
+    width: 200px;
+    border: 2px solid #6f42c1;
+    border-radius: 5px;
+    transition: 0.3s;
+}
+
+.user-input input:focus {
+    outline: none;
+    border-color: #5f38a9;
+    box-shadow: 0px 0px 8px rgba(106, 0, 255, 0.5);
+}
+
+.user-input button {
+    padding: 10px 15px;
+    font-size: 16px;
+    font-weight: bold;
+    background-color: #6f42c1;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: 0.3s;
+    margin-left: 10px;
+}
+
+.user-input button:hover {
+    background-color: #5f38a9;
+}
+
+/* ----------------------- */
+/* Visualization Section */
+/* ----------------------- */
+.visualization-container {
+    text-align: center;
+    margin-top: 40px;
+    padding: 25px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+#visualization {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 500px;
+    width: 100%;
+    max-width: 900px;
+    border: 2px solid #ccc;
+    background-color: white;
+    border-radius: 8px;
+    margin: 20px auto;
+    padding: 20px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Graph Nodes */
+.node {
+    stroke: black;
+    stroke-width: 2px;
+    transition: fill 0.3s ease-in-out;
+}
+
+/* Node Colors */
+.node-default {
+    fill: lightblue;
+}
+
+.node-visited {
+    fill: #ffcc00;
+}
+
+.node-shortest {
+    fill: green;
+}
+
+.node-start {
+    fill: darkgreen;
+}
+
+.node-end {
+    fill: red;
+}
+
+/* Graph Edges */
+.edge {
+    stroke: gray;
+    stroke-width: 3px;
+    transition: stroke 0.3s ease-in-out, stroke-width 0.3s ease-in-out;
+}
+
+/* Edge Colors */
+.edge-explored {
+    stroke: orange;
+    stroke-width: 4px;
+}
+
+.edge-shortest {
+    stroke: green;
+    stroke-width: 5px;
+}
+
+.node:hover {
+    stroke-width: 3px;
+    stroke: #000;
+}
+
+.edge:hover {
+    stroke-width: 5px;
+    stroke: blue;
+}

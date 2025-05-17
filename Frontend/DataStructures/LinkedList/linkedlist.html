@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="hy">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Կապակցված ցուցակ | AlgoLearn</title>
+    <link rel="stylesheet" href="../../styles.css">
+    <style>
+        main {
+            max-width: 1000px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        h1,
+        h2,
+        h3 {
+            margin-top: 1.8rem;
+            margin-bottom: 1.2rem;
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        h1 {
+            font-size: 2.2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        h2 {
+            font-size: 1.6rem;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 0.5rem;
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            margin-top: 1.5rem;
+        }
+
+        p {
+            margin-bottom: 1.5rem;
+            line-height: 1.7;
+            color: #444;
+        }
+
+        code {
+            background-color: #f0f0f0;
+            padding: 0.2rem 0.4rem;
+            border-radius: 3px;
+            font-family: monospace;
+            font-size: 0.9em;
+            color: #d14;
+        }
+
+        pre {
+            background-color: #f8f8f8;
+            padding: 1.2rem;
+            border-radius: var(--border-radius);
+            overflow-x: auto;
+            margin: 1.5rem 0 2rem;
+            border: 1px solid #eaeaea;
+        }
+
+        pre code {
+            background-color: transparent;
+            padding: 0;
+            color: #333;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        .content-block {
+            background-color: white;
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            margin: 2rem 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .visualization-container {
+            background-color: var(--card-bg);
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            box-shadow: 0 3px 15px rgba(0, 0, 0, 0.1);
+            margin: 2.5rem 0;
+        }
+
+        .user-input {
+            margin-bottom: 1.8rem;
+        }
+
+        .user-input label {
+            display: block;
+            margin-bottom: 0.7rem;
+            font-weight: 500;
+        }
+
+        input[type="text"],
+        input[type="number"] {
+            padding: 0.8rem 1rem;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            width: 65%;
+            margin-right: 1rem;
+            font-size: 1rem;
+        }
+
+        button {
+            background-color: var(--primary);
+            color: white;
+            padding: 0.8rem 1.8rem;
+            border: none;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            transition: background-color 0.3s;
+            font-weight: 500;
+        }
+
+        button:hover {
+            background-color: var(--primary-light);
+        }
+
+        .quiz-btn {
+            display: block;
+            margin: 3rem auto;
+            padding: 1rem 2.5rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        #visualization {
+            height: 150px;
+            background-color: white;
+            border-radius: var(--border-radius);
+            position: relative;
+            margin-top: 20px;
+            border: 1px solid #eaeaea;
+            overflow: visible;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            padding: 1rem;
+        }
+
+        .highlight-box {
+            background-color: #f7f2ff;
+            border-left: 4px solid var(--primary);
+            padding: 1.2rem;
+            margin: 1.5rem 0;
+            border-radius: 0 var(--border-radius) var(--border-radius) 0;
+        }
+
+        .step-list li {
+            position: relative;
+            padding-left: 0.5rem;
+        }
+
+        .code-result {
+            font-family: monospace;
+            background-color: #f5f5f5;
+            padding: 0.5rem 1rem;
+            border-radius: var(--border-radius);
+            margin: 0.3rem 0;
+            display: inline-block;
+        }
+
+        /* Linked List Node Styling */
+        .linkedlist-node {
+            width: 60px;
+            height: 60px;
+            border: 2px solid var(--primary);
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 10px;
+            position: relative;
+            background-color: white;
+            transition: background-color 0.3s ease;
+        }
+
+        .data-box {
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        .arrow-container {
+            width: 40px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 5px;
+        }
+
+        .arrow-stem {
+            width: 30px;
+            height: 2px;
+            background-color: var(--primary);
+            position: relative;
+        }
+
+        .arrow-stem:after {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: -4px;
+            border-width: 5px 0 5px 8px;
+            border-style: solid;
+            border-color: transparent transparent transparent var(--primary);
+        }
+
+        .null-pointer {
+            font-weight: bold;
+            font-size: 20px;
+            color: #888;
+            margin-left: 5px;
+        }
+
+        /* highlight while we walk the list */
+        .ll-searching {
+            background: #ffd24d !important;
+        }
+
+        /* yellow   */
+        /* node that is about to be removed */
+        .ll-deleting {
+            background: #e74c3c !important;
+            /* red      */
+            animation: llFade .6s forwards;
+        }
+
+        @keyframes llFade {
+            to {
+                transform: scale(.6);
+                opacity: 0;
+            }
+        }
+
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+
+            input[type="text"],
+            input[type="number"] {
+                width: 100%;
+                margin-bottom: 1rem;
+            }
+
+            nav {
+                flex-direction: column;
+                gap: 16px;
+            }
+
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            #visualization {
+                overflow-x: auto;
+                justify-content: flex-start;
+            }
+
+            h1 {
+                font-size: 2rem;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <a href="../../home.html" class="logo">
+                    <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M15 3C8.373 3 3 8.373 3 15C3 21.627 8.373 27 15 27C21.627 27 27 21.627 27 15C27 8.373 21.627 3 15 3Z"
+                            stroke="#6e43bc" stroke-width="2" />
+                        <circle cx="10" cy="10" r="2" fill="#6e43bc" />
+                        <circle cx="20" cy="10" r="2" fill="#6e43bc" />
+                        <circle cx="15" cy="15" r="2" fill="#6e43bc" />
+                        <circle cx="10" cy="20" r="2" fill="#6e43bc" />
+                        <circle cx="20" cy="20" r="2" fill="#6e43bc" />
+                        <line x1="10" y1="10" x2="20" y2="10" stroke="#6e43bc" />
+                        <line x1="10" y1="10" x2="15" y2="15" stroke="#6e43bc" />
+                        <line x1="20" y1="10" x2="15" y2="15" stroke="#6e43bc" />
+                        <line x1="10" y1="20" x2="15" y2="15" stroke="#6e43bc" />
+                        <line x1="20" y1="20" x2="15" y2="15" stroke="#6e43bc" />
+                    </svg>
+                    AlgoLearn
+                </a>
+                <ul class="nav-links">
+                    <li><a href="../../dashboard.html" id="home">Գլխավոր</a></li>
+                    <li><a href="../../learn.html" class="active">Ուսուցում</a></li>
+                    <li id="profileItem"><a href="../../profile.html">Անձնական էջ</a></li>
+                    <li><a href="../../about.html">Մեր մասին</a></li>
+                    <li id="logoutItem">
+                        <a href="#" id="logout">Ելք</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <div class="content-block">
+            <h1>Կապակցված ցուցակ (Linked List)</h1>
+            <p>
+                <strong>Կապակցված ցուցակը</strong> գծային տվյալների կառուցվածք է, որի տարրերը (հաճախ անվանվում են
+                հանգույցներ) չեն զբաղեցնում հիշողության հարակից տարածքներ։ Փոխարենը, յուրաքանչյուր հանգույց պահպանում է
+                իր
+                տվյալը և ցուցիչ (կամ հղում) հաջորդ հանգույցի վրա։ Այս կառուցվածքը թույլ է տալիս ավելի ճկուն օգտագործել
+                հիշողությունը, ինչպես նաև հեշտությամբ ավելացնել կամ հեռացնել տարրեր։
+            </p>
+            <div class="highlight-box">
+                <p style="margin-bottom: 0;">
+                    <strong>Հիմնական սկզբունք:</strong> Կապակցված ցուցակի յուրաքանչյուր հանգույց պարունակում է իր տվյալը
+                    և
+                    ցուցիչ (հղում) դեպի հաջորդ հանգույցը։ Վերջին հանգույցի ցուցիչը սովորաբար null է։
+                </p>
+            </div>
+        </div>
+
+        <div class="content-block">
+            <h2>Հիմնական հատկությունները</h2>
+            <ul>
+                <li><strong>Հանգույցների վրա հիմնված կառուցվածք․</strong> յուրաքանչյուր հանգույց պահում է տվյալ և ցուցիչ
+                    (կամ հղում) դեպի մեկ այլ հանգույց։</li>
+                <li><strong>Դինամիկ չափի փոփոխություն․</strong> կապակցված ցանկերը կարող են աճել կամ փոքրանալ աշխատանքի
+                    ընթացքում, առանց հիշողության հարակից բլոկների անհրաժեշտության։</li>
+                <li><strong>Հերթական հասանելիություն․</strong> ցանկացած հանգույց գտնելու կամ փոփոխելու համար սովորաբար
+                    անցնում են սկզբից (head-ից) դեպի թիրախ հանգույցը։</li>
+            </ul>
+            <p>
+                Կապակցված ցուցակի յուրաքանչյուր հանգույց պարունակում է՝
+            </p>
+            <ul>
+                <li><strong>Տվյալ (կամ բանալի)․</strong> Հանգույցում պահվող հիմնական արժեքը։</li>
+                <li><strong>Next ցուցիչ․</strong> Ցուցիչ (կամ հղում) դեպի հաջորդ հանգույցը։</li>
+            </ul>
+        </div>
+
+        <div class="content-block">
+            <h2>Ինչու՞ օգտագործել Կապակցված ցուցակ</h2>
+            <p>
+                Կապակցված ցուցակները շատ օգտակար են այն դեպքերում, երբ անհրաժեշտ է տարրերի <em>դինամիկ բազմությունը</em>
+                և
+                հաճախակի ավելացումներ կամ հեռացումներ։ Դրանց հիմնական կիրառությունները ներառում են՝
+            </p>
+            <ul>
+                <li><strong>Ճկուն հիշողության օգտագործում․</strong> Պարտադիր չէ հիշողության մեծ բլոկ հատկացնել նախապես,
+                    ինչը կապակցված ցանկերը դարձնում է օգտակար այն դեպքերում, երբ տվյալների կառուցվածքի առավելագույն չափն
+                    անհայտ է։</li>
+                <li><strong>Արդյունավետ ավելացումներ և ջնջումներ․</strong> Հանգույցների ավելացումը կամ հեռացումը սկզբից
+                    (կամ արդեն հայտնի հանգույցից) կարող է իրականացվել հաստատուն ժամանակում։</li>
+                <li><strong>Ստեկների և հերթերի իրականացում․</strong> Կապակցված ցուցակները հաճախ օգտագործվում են այս
+                    աբստրակտ
+                    տվյալների կառուցվածքների իրականացման համար։</li>
+            </ul>
+        </div>
+
+        <div class="content-block">
+            <h2>Կառուցվածքի օրինակ</h2>
+            <pre>
+ Head        
+  |         
+  v         
+[10] -> [20] -> [30] -> [40] -> NULL
+            </pre>
+            <p>
+                Այս օրինակում ցուցակն ունի չորս հանգույց, որոնցից յուրաքանչյուրը պարունակում է տվյալ (10, 20, 30, 40) և
+                ցուցիչ դեպի հաջորդ հանգույցը։ Վերջին հանգույցը (40) ցույց է տալիս NULL, ինչը նշանակում է ցուցակի վերջը։
+                Head-ը ցույց է տալիս առաջին հանգույցը և հանդիսանում է ցուցակի մուտքի կետը։
+            </p>
+        </div>
+
+        <div class="content-block">
+            <h2>Գործողություններ Կապակցված ցուցակի վրա</h2>
+            <p>
+                Կապակցված ցուցակի հիմնական գործողություններն են՝ <strong>ավելացնելը (insertion)</strong>,
+                <strong>որոնումը (search)</strong> և <strong>հեռացումը (deletion)</strong>։
+            </p>
+
+            <h3>1. Տարրի ավելացում</h3>
+            <p>
+                Տարրը կարող ենք ավելացնել ցուցակի սկզբում, վերջում կամ կամայական դիրքում։
+            </p>
+            <ul>
+                <li>Սկզբում ավելացնելը պարզագույն գործողությունն է՝ <code>O(1)</code> ժամանակային բարդությամբ։</li>
+                <li>Վերջում ավելացնելու համար անհրաժեշտ է անցնել ամբողջ ցուցակով, ինչը պահանջում է <code>O(n)</code>
+                    ժամանակ (եթե չունենք ցուցիչ դեպի վերջին հանգույցը)։</li>
+            </ul>
+
+            <pre><code>function insertAtBeginning(head, value):
+    newNode = createNode(value)
+    newNode.next = head
+    head = newNode
+    return head</code></pre>
+
+            <h3>2. Տարրի որոնում</h3>
+            <p>
+                Որոնման ժամանակ անցնում ենք ցուցակով մինչև գտնենք որոնվող տարրը կամ հասնենք ցուցակի վերջը։
+            </p>
+
+            <pre><code>function search(head, key):
+    current = head
+    while current != null:
+        if current.data == key:
+            return true
+        current = current.next
+    return false</code></pre>
+
+            <h3>3. Տարրի հեռացում</h3>
+            <p>
+                Հեռացման ժամանակ՝
+            </p>
+            <ul>
+                <li>Եթե հեռացվող հանգույցը առաջինն է, պարզապես փոխում ենք head-ը։</li>
+                <li>Այլ դեպքում, գտնում ենք հեռացվող հանգույցի նախորդ հանգույցը և փոփոխում դրա next ցուցիչը։</li>
+            </ul>
+
+            <pre><code>function deleteNode(head, key):
+    if head == null:
+        return null
+
+    if head.data == key:
+        head = head.next
+        return head
+
+    current = head
+    while current.next != null and current.next.data != key:
+        current = current.next
+
+    if current.next != null:
+        current.next = current.next.next
+
+    return head</code></pre>
+        </div>
+
+        <div class="content-block">
+            <h2>Կապակցված ցուցակի բարդությունը</h2>
+            <p>
+                Կապակցված ցուցակի գործողությունների ժամանակային բարդությունը հետևյալն է՝
+            </p>
+            <ul>
+                <li><strong>Ներդրում սկզբում՝</strong> <code>O(1)</code> — ուղղակի փոփոխում ենք head-ը։</li>
+                <li><strong>Ներդրում վերջում՝</strong> <code>O(n)</code> — անհրաժեշտ է անցնել ցուցակով (կամ
+                    <code>O(1)</code>, եթե պահվում է tail ցուցիչը)։
+                </li>
+                <li><strong>Հեռացում՝</strong> <code>O(n)</code> — անհրաժեշտ է գտնել հեռացվող հանգույցը կամ դրա նախորդը։
+                </li>
+                <li><strong>Որոնում՝</strong> <code>O(n)</code> — անհրաժեշտ է հերթականությամբ ստուգել հանգույցները։</li>
+            </ul>
+
+            <div class="highlight-box">
+                <p style="margin-bottom: 0;">
+                    <strong>Սահմանափակումներ։</strong> Ի տարբերություն զանգվածների, կապակցված ցուցակները չեն թույլատրում
+                    պատահական հասանելիություն, ինչը նշանակում է, որ ցանկացած տարրի հասնելու համար անհրաժեշտ է ցուցակով
+                    անցնել սկզբից։
+                </p>
+            </div>
+        </div>
+
+        <div class="visualization-container">
+            <h2 style="margin-top: 0;">Ինտերակտիվ Վիզուալիզացիա</h2>
+            <div class="user-input">
+                <label for="insertInput"><strong>Ավելացնել:</strong></label>
+                <input type="number" id="insertInput" placeholder="Մուտքագրեք թիվ">
+                <button id="btnInsert">Ավելացնել</button>
+            </div>
+            <div class="user-input">
+                <label for="deleteInput"><strong>Հեռացնել:</strong></label>
+                <input type="number" id="deleteInput" placeholder="Մուտքագրեք թիվ">
+                <button id="btnDelete">Հեռացնել</button>
+            </div>
+            <div class="user-input">
+                <label for="searchInput"><strong>Որոնել:</strong></label>
+                <input type="number" id="searchInput" placeholder="Մուտքագրեք թիվ">
+                <button id="btnSearch">Որոնել</button>
+            </div>
+            <div id="visualization"></div>
+        </div>
+
+        <button id="startQuiz" class="quiz-btn">Սկսել թեստը</button>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 AlgoLearn. Բոլոր իրավունքները պաշտպանված են: <a href="#">Գաղտնիության Քաղաքականություն</a> | <a
+                href="#">Հետադարձ կապ</a></p>
+    </footer>
+
+    <script src="linkedlist.js"></script>
+    <script src="../../main.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="hy">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Գաղտնաբառի վերականգնում | AlgoLearn</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    main {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .recovery-container {
+      display: flex;
+      width: 100%;
+      max-width: 800px;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+    }
+
+    .content {
+      width: 50%;
+      background-color: white;
+      padding: 40px;
+      border-radius: var(--border-radius);
+    }
+
+    .title-section {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .title-section h2 {
+      color: var(--text);
+      font-weight: 600;
+      font-size: 1.4rem;
+      margin-bottom: 6px;
+    }
+
+    .title-section p {
+      color: var(--text-light);
+      font-size: 0.9rem;
+    }
+
+    .steps-indicator {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 40px;
+      position: relative;
+    }
+
+    .steps-indicator::before {
+      content: "";
+      position: absolute;
+      top: 15px;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background-color: #e0e0e0;
+      z-index: 1;
+    }
+
+    .step {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+      z-index: 2;
+    }
+
+    .step-circle {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      margin-bottom: 8px;
+      color: white;
+      background-color: var(--gray);
+    }
+
+    .step.active .step-circle {
+      background-color: #4caf50;
+    }
+
+    .step.completed .step-circle {
+      background-color: var(--primary);
+    }
+
+    .step-label {
+      font-size: 0.8rem;
+      color: var(--text-light);
+    }
+
+    .step.active .step-label {
+      color: #4caf50;
+      font-weight: 500;
+    }
+
+    .step.completed .step-label {
+      color: var(--primary);
+      font-weight: 500;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-label {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--text);
+      font-size: 0.9rem;
+      font-weight: 500;
+    }
+
+    input {
+      width: 100%;
+      padding: 14px;
+      font-size: 0.95rem;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      transition: border 0.2s ease;
+    }
+
+    input:focus {
+      border-color: var(--primary);
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(26, 35, 126, 0.1);
+    }
+
+    button {
+      width: 100%;
+      padding: 14px;
+      background-color: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    button:hover {
+      background-color: var(--primary-dark);
+    }
+
+    button:disabled {
+      background-color: var(--gray);
+      cursor: not-allowed;
+      opacity: 0.7;
+    }
+
+    /* Added transition for button state changes */
+    button.enabled {
+      background-color: var(--primary);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .error-container,
+    .success-container {
+      text-align: center;
+      margin-top: 16px;
+      font-weight: 500;
+      display: none;
+      padding: 10px;
+      border-radius: 6px;
+      transition: all 0.3s ease;
+    }
+
+    .error-container {
+      color: var(--danger);
+      background-color: rgba(244, 67, 54, 0.1);
+    }
+
+    .success-container {
+      color: var(--success);
+      background-color: rgba(76, 175, 80, 0.1);
+    }
+
+    .copyright {
+      text-align: center;
+      font-size: 0.75rem;
+      color: var(--text-light);
+      margin-top: 30px;
+    }
+
+    /* Enhanced transition effects for step changes */
+    #step-request,
+    #step-verify,
+    #step-reset {
+      transition: opacity 0.3s ease;
+    }
+
+    /* Added animation for buttons when clicked */
+    button:active:not(:disabled) {
+      transform: translateY(2px);
+    }
+
+    /* Password input container styling */
+    .password-container {
+      position: relative;
+    }
+
+    .password-container input {
+      padding-right: 40px;
+    }
+
+    .password-toggle {
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0;
+      width: auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .password-toggle svg {
+      width: 22px;
+      height: 22px;
+      fill: none;
+      stroke: var(--text-light);
+      stroke-width: 2;
+      transition: stroke 0.2s;
+    }
+
+    .password-toggle:hover svg {
+      stroke: var(--primary);
+    }
+
+    @media (max-width: 768px) {
+      .content {
+        padding: 30px 20px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .steps-indicator {
+        margin-bottom: 30px;
+      }
+
+      .step-circle {
+        width: 28px;
+        height: 28px;
+        font-size: 0.85rem;
+      }
+
+      .step-label {
+        font-size: 0.7rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <div class="container">
+      <nav>
+        <a href="home.html" class="logo">
+          <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M15 3C8.373 3 3 8.373 3 15C3 21.627 8.373 27 15 27C21.627 27 27 21.627 27 15C27 8.373 21.627 3 15 3Z"
+              stroke="#6e43bc" stroke-width="2" />
+            <circle cx="10" cy="10" r="2" fill="#6e43bc" />
+            <circle cx="20" cy="10" r="2" fill="#6e43bc" />
+            <circle cx="15" cy="15" r="2" fill="#6e43bc" />
+            <circle cx="10" cy="20" r="2" fill="#6e43bc" />
+            <circle cx="20" cy="20" r="2" fill="#6e43bc" />
+            <line x1="10" y1="10" x2="20" y2="10" stroke="#6e43bc" />
+            <line x1="10" y1="10" x2="15" y2="15" stroke="#6e43bc" />
+            <line x1="20" y1="10" x2="15" y2="15" stroke="#6e43bc" />
+            <line x1="10" y1="20" x2="15" y2="15" stroke="#6e43bc" />
+            <line x1="20" y1="20" x2="15" y2="15" stroke="#6e43bc" />
+          </svg>
+          AlgoLearn
+        </a>
+        <ul class="nav-links">
+          <li><a href="home.html" class="active" id="home">Գլխավոր</a></li>
+          <li><a href="learn.html">Ուսուցում</a></li>
+          <li><a href="about.html">Մեր մասին</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+  <main>
+    <!-- Right content area -->
+    <div class="content">
+      <!-- Step 1: Request Code -->
+      <div id="step-request">
+        <div class="title-section">
+          <h2>Գաղտնաբառի վերականգնում</h2>
+          <p>Խնդրում ենք մուտքագրել Ձեր հաշվի էլ․ փոստը</p>
+        </div>
+
+        <div class="steps-indicator">
+          <div class="step active">
+            <div class="step-circle">1</div>
+            <div class="step-label">Կոդի հարցում</div>
+          </div>
+          <div class="step">
+            <div class="step-circle">2</div>
+            <div class="step-label">Կոդի հաստատում</div>
+          </div>
+          <div class="step">
+            <div class="step-circle">3</div>
+            <div class="step-label">Նոր գաղտնաբառ</div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="reset-email" class="form-label">Էլ․ փոստ</label>
+          <input type="email" id="reset-email" placeholder="Ձեր էլ․ փոստը" autocomplete="email" />
+        </div>
+
+        <button id="send-code">Ուղարկել հաստատման կոդը</button>
+        <p class="error-container" id="error-request"></p>
+        <p class="success-container" id="success-request"></p>
+      </div>
+
+      <!-- Step 2: Enter Code (hidden by default) -->
+      <div id="step-verify" style="display: none;">
+        <div class="title-section">
+          <h2>Կոդի հաստատում</h2>
+          <p>Մուտքագրեք Ձեր էլ․ փոստին ուղարկված հաստատման կոդը</p>
+        </div>
+
+        <div class="steps-indicator">
+          <div class="step completed">
+            <div class="step-circle">✓</div>
+            <div class="step-label">Կոդի հարցում</div>
+          </div>
+          <div class="step active">
+            <div class="step-circle">2</div>
+            <div class="step-label">Կոդի հաստատում</div>
+          </div>
+          <div class="step">
+            <div class="step-circle">3</div>
+            <div class="step-label">Նոր գաղտնաբառ</div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="verification-code" class="form-label">Հաստատման կոդ</label>
+          <input type="text" id="verification-code" maxlength="6" placeholder="6-նիշանոց կոդը" inputmode="numeric"
+            pattern="[0-9]*" />
+        </div>
+
+        <button id="verify-code-btn">Հաստատել կոդը</button>
+        <p class="error-container" id="error-verify"></p>
+        <p class="success-container" id="success-verify"></p>
+
+      </div>
+
+      <!-- Step 3: Reset Password (hidden by default) -->
+      <div id="step-reset" style="display: none;">
+        <div class="title-section">
+          <h2>Նոր գաղտնաբառ</h2>
+          <p>Մուտքագրեք Ձեր նոր գաղտնաբառը</p>
+        </div>
+
+        <div class="steps-indicator">
+          <div class="step completed">
+            <div class="step-circle">✓</div>
+            <div class="step-label">Կոդի հարցում</div>
+          </div>
+          <div class="step completed">
+            <div class="step-circle">✓</div>
+            <div class="step-label">Կոդի հաստատում</div>
+          </div>
+          <div class="step active">
+            <div class="step-circle">3</div>
+            <div class="step-label">Նոր գաղտնաբառ</div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="new-password" class="form-label">Նոր գաղտնաբառ</label>
+          <div class="password-container">
+            <input type="password" id="new-password" placeholder="Նոր գաղտնաբառ" />
+            <button type="button" class="password-toggle" id="toggle-new-password" aria-label="Տեսնել գաղտնաբառը">
+              <svg viewBox="0 0 24 24" class="eye-icon">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                <circle cx="12" cy="12" r="3"></circle>
+              </svg>
+              <svg viewBox="0 0 24 24" class="eye-off-icon" style="display: none;">
+                <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+                <line x1="1" y1="1" x2="23" y2="23"></line>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="confirm-password" class="form-label">Կրկնեք գաղտնաբառը</label>
+          <div class="password-container">
+            <input type="password" id="confirm-password" placeholder="Կրկնեք գաղտնաբառը" />
+            <button type="button" class="password-toggle" id="toggle-confirm-password" aria-label="Տեսնել գաղտնաբառը">
+              <svg viewBox="0 0 24 24" class="eye-icon">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                <circle cx="12" cy="12" r="3"></circle>
+              </svg>
+              <svg viewBox="0 0 24 24" class="eye-off-icon" style="display: none;">
+                <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+                <line x1="1" y1="1" x2="23" y2="23"></line>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <button id="reset-password-btn">Վերականգնել գաղտնաբառը</button>
+        <p class="error-container" id="error-reset"></p>
+        <p class="success-container" id="success-reset"></p>
+
+      </div>
+    </div>
+    </div>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>&copy; 2025 AlgoLearn. Բոլոր իրավունքները պաշտպանված են: <a href="#">Գաղտնիության Քաղաքականություն</a> | <a
+          href="feedback.html">Հետադարձ կապ</a></p>
+    </div>
+  </footer>
+
+  <script src="reset-request.js"></script>
+</body>
+
+</html>

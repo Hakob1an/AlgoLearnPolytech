@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="hy">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Գլխավոր | AlgoLearn</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="home.css">
+</head>
+
+<body>
+  <header>
+    <div class="container">
+      <nav>
+        <a href="home.html" class="logo">
+          <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M15 3C8.373 3 3 8.373 3 15C3 21.627 8.373 27 15 27C21.627 27 27 21.627 27 15C27 8.373 21.627 3 15 3Z" stroke="#6e43bc" stroke-width="2"/>
+            <circle cx="10" cy="10" r="2" fill="#6e43bc"/>
+            <circle cx="20" cy="10" r="2" fill="#6e43bc"/>
+            <circle cx="15" cy="15" r="2" fill="#6e43bc"/>
+            <circle cx="10" cy="20" r="2" fill="#6e43bc"/>
+            <circle cx="20" cy="20" r="2" fill="#6e43bc"/>
+            <line x1="10" y1="10" x2="20" y2="10" stroke="#6e43bc"/>
+            <line x1="10" y1="10" x2="15" y2="15" stroke="#6e43bc"/>
+            <line x1="20" y1="10" x2="15" y2="15" stroke="#6e43bc"/>
+            <line x1="10" y1="20" x2="15" y2="15" stroke="#6e43bc"/>
+            <line x1="20" y1="20" x2="15" y2="15" stroke="#6e43bc"/>
+          </svg>
+          AlgoLearn
+        </a>
+        <ul class="nav-links">
+          <li><a href="home.html" class="active">Գլխավոր</a></li>
+          <li><a href="learn.html">Ուսուցում</a></li>
+          <li><a href="about.html">Մեր Մասին</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <div class="hero-wrapper">
+      <section class="hero">
+        <section class="hero">
+          <div class="hero-left">
+            <!-- Inline SVG START -->
+            <div class="animated-logo">
+              <svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+                <!-- Background gradient -->
+                <defs>
+                  <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#f6f7f9" />
+                    <stop offset="100%" stop-color="#e5e7eb" />
+                  </linearGradient>
+                  <linearGradient id="purpleGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#8b5cf6" />
+                    <stop offset="100%" stop-color="#5f38a9" />
+                  </linearGradient>
+                  <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+                    <feGaussianBlur stdDeviation="5" result="blur" />
+                    <feComposite in="SourceGraphic" in2="blur" operator="over" />
+                  </filter>
+                </defs>
+          
+                <!-- Main circle -->
+                <circle cx="200" cy="200" r="190" fill="url(#bgGradient)" />
+          
+                <!-- Binary code background -->
+                <g fill="#e5e7eb" font-family="monospace" font-size="8">
+                  <text x="80" y="90">01010</text>
+                  <text x="300" y="70">10101</text>
+                  <text x="120" y="320">00111</text>
+                  <text x="280" y="340">11000</text>
+                  <text x="60" y="200">10101</text>
+                  <text x="320" y="220">01010</text>
+                </g>
+          
+                <!-- Algorithm core -->
+                <g filter="url(#glow)">
+                  <polygon points="200,120 260,150 260,250 200,280 140,250 140,150"
+                    fill="none" stroke="#7248c7" stroke-width="3" />
+                  <path d="M200,120 L200,280 M140,150 L260,250 M260,150 L140,250"
+                    fill="none" stroke="#7248c7" stroke-width="2" />
+                  <circle cx="200" cy="200" r="60" fill="none" stroke="#8b5cf6" stroke-width="2"
+                    stroke-dasharray="8,4">
+                    <animateTransform attributeName="transform" type="rotate"
+                      from="0 200 200" to="360 200 200" dur="20s" repeatCount="indefinite" />
+                  </circle>
+          
+                  <!-- Nodes -->
+                  <circle cx="200" cy="120" r="12" fill="url(#purpleGradient)">
+                    <animate attributeName="r" values="12;14;12" dur="2s" repeatCount="indefinite" />
+                  </circle>
+                  <circle cx="260" cy="150" r="12" fill="url(#purpleGradient)">
+                    <animate attributeName="r" values="12;14;12" dur="2s" repeatCount="indefinite" begin="0.3s" />
+                  </circle>
+                  <circle cx="260" cy="250" r="12" fill="url(#purpleGradient)">
+                    <animate attributeName="r" values="12;14;12" dur="2s" repeatCount="indefinite" begin="0.6s" />
+                  </circle>
+                  <circle cx="200" cy="280" r="12" fill="url(#purpleGradient)">
+                    <animate attributeName="r" values="12;14;12" dur="2s" repeatCount="indefinite" begin="0.9s" />
+                  </circle>
+                  <circle cx="140" cy="250" r="12" fill="url(#purpleGradient)">
+                    <animate attributeName="r" values="12;14;12" dur="2s" repeatCount="indefinite" begin="1.2s" />
+                  </circle>
+                  <circle cx="140" cy="150" r="12" fill="url(#purpleGradient)">
+                    <animate attributeName="r" values="12;14;12" dur="2s" repeatCount="indefinite" begin="1.5s" />
+                  </circle>
+          
+                  <!-- Center node -->
+                  <circle cx="200" cy="200" r="16" fill="#5f38a9">
+                    <animate attributeName="r" values="16;18;16" dur="3s" repeatCount="indefinite" />
+                  </circle>
+          
+                  <!-- Moving particles -->
+                  <g>
+                    <circle cx="200" cy="140" r="4" fill="#ffffff">
+                      <animate attributeName="cx" values="200;240;240;200;160;160;200" dur="6s" repeatCount="indefinite" />
+                      <animate attributeName="cy" values="140;160;240;260;240;160;140" dur="6s" repeatCount="indefinite" />
+                    </circle>
+                    <circle cx="160" cy="200" r="4" fill="#ffffff">
+                      <animate attributeName="cx" values="160;160;200;240;240;200;160" dur="6s" repeatCount="indefinite" />
+                      <animate attributeName="cy" values="200;240;260;240;160;140;200" dur="6s" repeatCount="indefinite" />
+                    </circle>
+                    <circle cx="200" cy="140" r="3" fill="#ffffff">
+                      <animate attributeName="cy" values="140;260;140" dur="4s" repeatCount="indefinite" />
+                    </circle>
+                    <circle cx="160" cy="200" r="3" fill="#ffffff">
+                      <animate attributeName="cx" values="160;240;160" dur="4s" repeatCount="indefinite" />
+                    </circle>
+                  </g>
+          
+                  <!-- Edge connections -->
+                  <line x1="100" y1="140" x2="140" y2="150" stroke="#5f38a9" stroke-width="2" />
+                  <line x1="100" y1="260" x2="140" y2="250" stroke="#5f38a9" stroke-width="2" />
+                  <line x1="300" y1="140" x2="260" y2="150" stroke="#5f38a9" stroke-width="2" />
+                  <line x1="300" y1="260" x2="260" y2="250" stroke="#5f38a9" stroke-width="2" />
+          
+                  <!-- Edge nodes -->
+                  <circle cx="100" cy="140" r="8" fill="#8b5cf6" />
+                  <circle cx="100" cy="260" r="8" fill="#8b5cf6" />
+                  <circle cx="300" cy="140" r="8" fill="#8b5cf6" />
+                  <circle cx="300" cy="260" r="8" fill="#8b5cf6" />
+                </g>
+          
+                <!-- Glow pulse -->
+                <circle cx="200" cy="200" r="80" fill="none" stroke="#8b5cf6" stroke-width="1" opacity="0.5">
+                  <animate attributeName="r" values="80;120;80" dur="8s" repeatCount="indefinite" />
+                  <animate attributeName="opacity" values="0.5;0;0.5" dur="8s" repeatCount="indefinite" />
+                </circle>
+              </svg>
+            </div>
+            <!-- Inline SVG END -->
+          </div>
+          
+          <div class="hero-right">
+            <h1>Բարի գալուստ AlgoLearn</h1>
+            <p>Ուսումնասիրեք ալգորիթմների և տվյալների կառուցվածքների աշխարհը՝ ինտերակտիվ վիզուալիզացիաների միջոցով։</p>
+            <div class="cta-buttons">
+              <a href="login.html?form=signup" class="btn">Սկսել ուսուցումը</a>
+              <a href="login.html?form=login" class="btn btn-outline">Մուտք գործել</a>
+            </div>
+          </div>
+        </section>
+      </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>&copy; 2025 AlgoLearn. Բոլոր իրավունքները պաշտպանված են:
+        <a href="#">Գաղտնիության Քաղաքականություն</a> |
+        <a href="feedback.html">Հետադարձ կապ</a>
+      </p>
+    </div>
+  </footer>
+
+  <script src="main.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="hy">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Մեր մասին | AlgoLearn</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    main {
+      max-width: 1200px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+
+    h1,
+    h2 {
+      color: var(--primary-dark);
+      margin-bottom: 20px;
+    }
+
+    p {
+      font-size: 18px;
+      color: var(--text-light);
+      margin-bottom: 20px;
+    }
+
+    .faq-item {
+      background-color: var(--card-bg);
+      padding: 20px;
+      margin-bottom: 20px;
+      border-left: 4px solid var(--primary);
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    }
+
+    .faq-item h3 {
+      margin-bottom: 10px;
+      color: var(--text);
+    }
+
+    .contact ul {
+      list-style: none;
+      padding-left: 0;
+    }
+
+    .contact li {
+      margin-bottom: 10px;
+      font-size: 16px;
+      color: var(--text);
+    }
+
+    .contact a {
+      color: var(--primary);
+      text-decoration: none;
+    }
+
+    .contact a:hover {
+      text-decoration: underline;
+    }
+
+    .about p {
+      max-width: unset;
+      width: 100%;
+      line-height: 1.6;
+      word-break: break-word;
+      text-align: justify;
+    }
+
+
+    @media (max-width: 768px) {
+      nav {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .nav-links {
+        margin-top: 16px;
+        flex-wrap: wrap;
+        gap: 16px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <div class="container">
+      <nav>
+        <a href="home.html" class="logo">
+          <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M15 3C8.373 3 3 8.373 3 15C3 21.627 8.373 27 15 27C21.627 27 27 21.627 27 15C27 8.373 21.627 3 15 3Z"
+              stroke="#6e43bc" stroke-width="2" />
+            <circle cx="10" cy="10" r="2" fill="#6e43bc" />
+            <circle cx="20" cy="10" r="2" fill="#6e43bc" />
+            <circle cx="15" cy="15" r="2" fill="#6e43bc" />
+            <circle cx="10" cy="20" r="2" fill="#6e43bc" />
+            <circle cx="20" cy="20" r="2" fill="#6e43bc" />
+            <line x1="10" y1="10" x2="20" y2="10" stroke="#6e43bc" />
+            <line x1="10" y1="10" x2="15" y2="15" stroke="#6e43bc" />
+            <line x1="20" y1="10" x2="15" y2="15" stroke="#6e43bc" />
+            <line x1="10" y1="20" x2="15" y2="15" stroke="#6e43bc" />
+            <line x1="20" y1="20" x2="15" y2="15" stroke="#6e43bc" />
+          </svg>
+          AlgoLearn
+        </a>
+        <ul class="nav-links">
+          <li><a href="home.html">Գլխավոր</a></li>
+          <li><a href="learn.html">Ուսուցում</a></li>
+          <li id="profileItem"><a href="profile.html">Անձնական էջ</a></li>
+          <li><a href="../about.html" class="active">Մեր մասին</a></li>
+          <li id="logoutItem">
+            <a href="#" id="logout">Ելք</a>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="about">
+      <h1>Մեր մասին</h1>
+      <p>AlgoLearn-ը հարթակ է, որը նախատեսված է ալգորիթմների և տվյալների կառուցվածքների ուսուցումը դարձնելու դյուրին,
+        ինտերակտիվ և հաճելի։ Մեր առաքելությունն է՝ ուսանողներին և ծրագրավորողներին ապահովել այն գործիքներով, որոնք
+        անհրաժեշտ են համակարգչային գիտության և ծրագրային ճարտարագիտության ոլորտում առաջադիմելու համար։</p>
+      <p>Վիզուալիզացիաների, անհատական առաջընթացի հետևման և գործնական վարժությունների
+        միջոցով AlgoLearn-ը օգնում է
+        վերածել տեսական գիտելիքները գործնական հմտությունների։</p>
+    </section>
+
+    <section class="faq">
+      <h2>Հաճախ տրվող հարցեր</h2>
+      <div class="faq-item">
+        <h3>Անվճա՞ր է արդյոք AlgoLearn-ը։</h3>
+        <p>Այո՛, AlgoLearn-ը տրամադրում է անվճար հասանելիություն հիմնական ուսուցման նյութերին։ Հնարավոր է, որ ապագայում
+          հասանելի լինեն պրեմիում հնարավորություններ՝ առաջադեմ օգտվողների համար։</p>
+      </div>
+      <div class="faq-item">
+        <h3>Ի՞նչ է AlgoLearn-ը։</h3>
+        <p>AlgoLearn-ը ինտերակտիվ հարթակ է, որտեղ կարող եք սովորել ալգորիթմներ և տվյալների կառուցվածքներ՝
+          վիզուալիզացիաների և առաջնորդված վարժությունների միջոցով։</p>
+      </div>
+
+      <div class="faq-item">
+        <h3>Ինչպե՞ս կարող եմ հետևել իմ առաջընթացին։</h3>
+        <p>Ձեր առաջընթացը ավտոմատ կերպով հետևվում է, երբ դուք ավարտում եք դասերը, վարժությունները և թեստերը։ Դուք կարող
+          եք տեսնել այն ձեր անձնական էջում՝ առաջընթացի բաժնում։</p>
+      </div>
+      <div class="faq-item">
+        <h3>Ո՞ւմ համար է այս հարթակը։</h3>
+        <p>AlgoLearn-ը նախատեսված է ուսանողների, ծրագրավորողների և բոլոր նրանց համար, ովքեր ցանկանում են խորացնել իրենց
+          գիտելիքները ալգորիթմների և տվյալների կառուցվածքների ոլորտում։</p>
+      </div>
+    </section>
+
+    <section class="contact">
+      <h2>Հետադարձ կապ</h2>
+      <p>Եթե ունեք հարցեր, առաջարկներ կամ աջակցություն եք պահանջում, ազատորեն կապվեք մեզ հետ․</p>
+      <ul>
+        <li>Էլ. փոստ: <a href="mailto:algolearnservice@gmail.com">algolearnservice@gmail.com</a></li>
+        <li>Հեռ.: +374-77-485-796</li>
+        <li>Հասցե: 123 Տեխ. պողոտա, Կոդավորման քաղաք, Դեվելոփերլենդ</li>
+      </ul>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>&copy; 2025 AlgoLearn. Բոլոր իրավունքները պաշտպանված են: <a href="#">Գաղտնիության Քաղաքականություն</a> | <a
+          href="feedback.html">Հետադարձ կապ</a></p>
+    </div>
+  </footer>
+
+  <script src="main.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="hy">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ստեկ | AlgoLearn</title>
+    <link rel="stylesheet" href="../../styles.css">
+    <style>
+        main {
+            max-width: 1000px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        h1,
+        h2,
+        h3 {
+            margin-top: 1.8rem;
+            margin-bottom: 1.2rem;
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        h1 {
+            font-size: 2.2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        h2 {
+            font-size: 1.6rem;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 0.5rem;
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            margin-top: 1.5rem;
+        }
+
+        p {
+            margin-bottom: 1.5rem;
+            line-height: 1.7;
+            color: #444;
+        }
+
+        code {
+            background-color: #f0f0f0;
+            padding: 0.2rem 0.4rem;
+            border-radius: 3px;
+            font-family: monospace;
+            font-size: 0.9em;
+            color: #d14;
+        }
+
+        pre {
+            background-color: #f8f8f8;
+            padding: 1.2rem;
+            border-radius: var(--border-radius);
+            overflow-x: auto;
+            margin: 1.5rem 0 2rem;
+            border: 1px solid #eaeaea;
+        }
+
+        pre code {
+            background-color: transparent;
+            padding: 0;
+            color: #333;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        .content-block {
+            background-color: white;
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            margin: 2rem 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .visualization-container {
+            background-color: var(--card-bg);
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            box-shadow: 0 3px 15px rgba(0, 0, 0, 0.1);
+            margin: 2.5rem 0;
+        }
+
+        .user-input {
+            margin-bottom: 1.8rem;
+        }
+
+        .user-input label {
+            display: block;
+            margin-bottom: 0.7rem;
+            font-weight: 500;
+        }
+
+        input[type="text"],
+        input[type="number"] {
+            padding: 0.8rem 1rem;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            width: 65%;
+            margin-right: 1rem;
+            font-size: 1rem;
+        }
+
+        button {
+            background-color: var(--primary);
+            color: white;
+            padding: 0.8rem 1.8rem;
+            border: none;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            transition: background-color 0.3s;
+            font-weight: 500;
+        }
+
+        button:hover {
+            background-color: var(--primary-light);
+        }
+
+        .quiz-btn {
+            display: block;
+            margin: 3rem auto;
+            padding: 1rem 2.5rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        #visualization {
+            height: 360px;
+            background-color: white;
+            border-radius: var(--border-radius);
+            display: flex;
+            flex-direction: column-reverse;
+            align-items: center;
+            justify-content: flex-end;
+            position: relative;
+            margin-top: 20px;
+            border: 1px solid #eaeaea;
+            overflow: hidden;
+            padding: 20px;
+        }
+
+        .highlight-box {
+            background-color: #f7f2ff;
+            border-left: 4px solid var(--primary);
+            padding: 1.2rem;
+            margin: 1.5rem 0;
+            border-radius: 0 var(--border-radius) var(--border-radius) 0;
+        }
+
+        /* Stack specific styling */
+        .stack-item {
+            width: 80%;
+            height: 50px;
+            background-color: var(--primary);
+            color: white;
+            border-radius: 8px;
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+
+            input[type="text"],
+            input[type="number"] {
+                width: 100%;
+                margin-bottom: 1rem;
+            }
+
+            .nav-links {
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <a href="../../home.html" class="logo">
+                    <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M15 3C8.373 3 3 8.373 3 15C3 21.627 8.373 27 15 27C21.627 27 27 21.627 27 15C27 8.373 21.627 3 15 3Z"
+                            stroke="#6e43bc" stroke-width="2" />
+                        <circle cx="10" cy="10" r="2" fill="#6e43bc" />
+                        <circle cx="20" cy="10" r="2" fill="#6e43bc" />
+                        <circle cx="15" cy="15" r="2" fill="#6e43bc" />
+                        <circle cx="10" cy="20" r="2" fill="#6e43bc" />
+                        <circle cx="20" cy="20" r="2" fill="#6e43bc" />
+                        <line x1="10" y1="10" x2="20" y2="10" stroke="#6e43bc" />
+                        <line x1="10" y1="10" x2="15" y2="15" stroke="#6e43bc" />
+                        <line x1="20" y1="10" x2="15" y2="15" stroke="#6e43bc" />
+                        <line x1="10" y1="20" x2="15" y2="15" stroke="#6e43bc" />
+                        <line x1="20" y1="20" x2="15" y2="15" stroke="#6e43bc" />
+                    </svg>
+                    AlgoLearn
+                </a>
+                <ul class="nav-links">
+                    <li><a href="../../dashboard.html" id="home">Գլխավոր</a></li>
+                    <li><a href="../../learn.html" class="active">Ուսուցում</a></li>
+                    <li id="profileItem"><a href="../../profile.html">Անձնական էջ</a></li>
+                    <li><a href="../../about.html">Մեր մասին</a></li>
+                    <li id="logoutItem">
+                        <a href="#" id="logout">Ելք</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <div class="content-block">
+            <h1>Ստեկ (Stack)</h1>
+            <p>
+                <strong>Ստեկը (Stack)</strong> գծային տվյալների կառուցվածք է, որն աշխատում է
+                <strong>LIFO (Last In, First Out)</strong> սկզբունքով։ Սա նշանակում է, որ վերջին
+                ավելացված («push» եղած) տարրը առաջինն է դուրս բերվում («pop» լինում)։
+                Որպես պատկերավոր օրինակ կարելի է դիտարկել ափսեների իրական հավաքածուն․
+                դուք սովորաբար նոր ափսեները ավելացնում եք վերևից, իսկ երբ հանում եք՝ վերցնում եք վերևի ափսեն առաջինը։
+            </p>
+
+            <div class="highlight-box">
+                <p style="margin-bottom: 0;">
+                    <strong>Հիմնական սկզբունք:</strong> Ստեկի վրա վերջին ավելացված տարրն առաջինն է հեռացվում։ Սա հայտնի
+                    է որպես LIFO (Last In, First Out) սկզբունք։
+                </p>
+            </div>
+        </div>
+
+        <div class="content-block">
+            <h2>Օգտագործման օրինակներ</h2>
+            <ul>
+                <li><strong>Զննարկչի պատմություն․</strong> երբ սեղմում եք «Հետ» (Back) կոճակը, վերջին այցելած էջը
+                    հեռացվում
+                    է առաջինը։</li>
+                <li><strong>Տեքստային խմբագրիչների «Չեղարկել» (Undo) ֆունկցիա․</strong> ամենավերջին փոփոխությունն է
+                    չեղարկվում առաջինը, իսկ ավելի վաղ փոփոխությունները՝ հաջորդաբար։</li>
+                <li><strong>Ծրագրավորման «Կանչերի ստեկ» (Call Stack)․</strong> ֆունկցիաների կանչերը ավելացվում են ստեկի
+                    վերևից, և ամենավերջին կանչն է առաջինն ավարտվում։</li>
+                <li><strong>Արտահայտությունների հաշվարկ․</strong> օրինակ, մաթեմատիկական արտահայտությունների
+                    (հատկապես հետնամաս գրառման ձևով) հաշվարկման համար:</li>
+                <li><strong>Ալգորիթմներում․</strong> Դեպի խորություն որոնման (DFS) ալգորիթմում օգտագործվում է
+                    ուսումնասիրության ընթացքում հանգույցների հիշման համար:</li>
+            </ul>
+        </div>
+
+        <div class="content-block">
+            <h2>Հիմնական գործողություններ</h2>
+            <ul>
+                <li><strong>Push («ավելացնել»)․</strong> Նոր տարրի ավելացում ստեկի վերևից։</li>
+                <li><strong>Pop («հեռացնել»)․</strong> Վերևի տարրի հեռացում ստեկից։</li>
+                <li><strong>Peek («նայել վերևի տարրը»)․</strong> Վերադարձնում է վերևի տարրը՝ առանց այն հեռացնելու։</li>
+                <li><strong>Size («չափ»)․</strong> Վերադարձնում է ստեկում պահվող տարրերի քանակը։</li>
+                <li><strong>isEmpty («դատարկ է»)․</strong> Ստուգում է, արդյոք ստեկը դատարկ է, թե ոչ։</li>
+            </ul>
+        </div>
+
+        <div class="content-block">
+            <h2>Կոդային օրինակ</h2>
+            <pre><code>function InitializeStack():
+    items = []     
+    return items
+
+function Push(stack, item):
+    append item to stack
+    return stack
+
+function Pop(stack):
+    if stack is empty then
+        return "Stack is empty"
+    else
+        remove and return the last element from stack
+    end if
+
+function Peek(stack):
+    if stack is empty then
+        return "Stack is empty"
+    else
+        return the last element of stack
+    end if
+
+function Size(stack):
+    return number of elements in stack</code></pre>
+        </div>
+
+        <div class="content-block">
+            <h2>Թվային օրինակ</h2>
+            <h3>Սկսում ենք դատարկ ստեկից</h3>
+            <pre><code>[]</code></pre>
+
+            <h3>Տարրերի ավելացում (Push)</h3>
+            <p>Ենթադրենք, հերթով ավելացնում ենք տարրերը՝ 5, 8 և 3.</p>
+            <pre><code>Push(5) → [5]
+Push(8) → [5, 8]
+Push(3) → [5, 8, 3]   (Ստեկի վերևում այժմ 3-ն է)</code></pre>
+
+            <h3>Տարրի հեռացում (Pop)</h3>
+            <p>Երբ հեռացնում ենք տարր, առաջինը դուրս է գալիս ամենավերջում ավելացված տարրը (3-ը)․</p>
+            <pre><code>Pop() → 3 (Ստեկը դառնում է [5, 8])
+Pop() → 8 (Ստեկը դառնում է [5])
+Pop() → 5 (Ստեկը դառնում է [])
+Pop() → "Stack is empty"</code></pre>
+        </div>
+
+        <div class="content-block">
+            <h2>Ժամանակային բարդություն</h2>
+            <ul>
+                <li><strong>Push («ավելացնել»)․</strong> O(1) – տարրի ավելացումը կատարվում է հաստատուն ժամանակում։</li>
+                <li><strong>Pop («հեռացնել»)․</strong> O(1) – վերևի տարրի հեռացումը կատարվում է հաստատուն ժամանակում։
+                </li>
+                <li><strong>Peek («նայել»)․</strong> O(1) – վերևի տարրին հասանելիությունն իրականացվում է հաստատուն
+                    ժամանակում։</li>
+                <li><strong>isEmpty («դատարկ է»)․</strong> O(1) – ստեկի դատարկ լինելու ստուգումը հաստատուն ժամանակում։
+                </li>
+                <li><strong>Size («չափ»)․</strong> O(1) – տարրերի քանակի վերադարձը հաստատուն ժամանակ է, եթե այն
+                    հաշվարկվում
+                    է ընթացիկ ձևով։</li>
+            </ul>
+        </div>
+
+        <div class="visualization-container">
+            <h2 style="margin-top: 0;">Ինտերակտիվ Վիզուալիզացիա</h2>
+            <p>Մուտքագրեք արժեք և ավելացրեք այն ստեկին (Push) կամ հեռացրեք վերևի տարրը (Pop): Դիտեք, թե ինչպես է
+                աշխատում LIFO սկզբունքը:</p>
+
+            <div class="user-input">
+                <label for="stackInput"><strong>Մուտքագրեք արժեք:</strong></label>
+                <input type="text" id="stackInput" placeholder="Մուտքագրեք արժեք">
+                <button id="pushButton">Push</button>
+                <button id="popButton">Pop</button>
+            </div>
+
+            <div id="visualization"></div>
+        </div>
+
+        <button id="startQuiz" class="quiz-btn">Սկսել թեստը</button>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 AlgoLearn. Բոլոր իրավունքները պաշտպանված են: <a href="#">Գաղտնիության Քաղաքականություն</a> | <a
+                href="#">Հետադարձ կապ</a></p>
+    </footer>
+
+    <script src="stack.js"></script>
+    <script src="../../main.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,117 @@
+/* 🔹 User Input Section */
+.user-input {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    padding: 15px; /* Reduced from 20px */
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.1);
+    width: fit-content;
+    margin: 10px auto 15px auto;
+}
+
+.user-input label {
+    font-size: 18px;
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.user-input input {
+    padding: 12px;
+    font-size: 16px;
+    width: 300px;
+    border: 2px solid #6f42c1;
+    border-radius: 5px;
+    transition: 0.3s;
+}
+
+.user-input input:focus {
+    outline: none;
+    border-color: #5f38a9;
+    box-shadow: 0px 0px 8px rgba(106, 0, 255, 0.5);
+}
+
+.user-input button {
+    padding: 12px 18px;
+    font-size: 16px;
+    font-weight: bold;
+    background-color: #6f42c1;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: 0.3s;
+    margin-left: 10px;
+}
+
+.user-input button:hover {
+    background-color: #5f38a9;
+}
+
+/* --------------------- */
+/* Visualization Section */
+/* --------------------- */
+.visualization-container {
+    text-align: center;
+    margin-top: 50px;
+    padding: 25px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+.visualization-container h2 {
+    text-align: center;
+    margin-top: 30px;
+    padding: 30px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%; 
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#visualization {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    height: 350px;
+    width: 85%;
+    max-width: 900px;
+    border: 2px solid #ccc;
+    background-color: white;
+    border-radius: 8px;
+    margin: 30px auto;
+    padding: 20px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+.bar {
+    width: 30px;
+    margin: 2px;
+    background-color: blue;
+    transition: height 0.5s ease-in-out, background-color 0.3s ease-in-out;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    color: white;
+    font-weight: bold;
+}
+
+/* 🔹 Consistent Container Styling */
+.content-container {
+    width: 85%;
+    margin: 20px auto;
+    background: white;
+    padding: 25px;
+    border-radius: 8px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    text-align: left;
+}
